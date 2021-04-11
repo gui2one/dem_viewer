@@ -26,3 +26,16 @@ add_subdirectory(src/vendor/glad)
 
 include_directories(src/vendor/glad/include)
 target_link_libraries(${project_name} glad ${GLAD_LIBRARIES})
+
+#ImGUI
+add_library(imgui STATIC
+	src/vendor/imgui/backends/imgui_impl_opengl3.cpp
+	src/vendor/imgui/backends/imgui_impl_glfw.cpp
+	src/vendor/imgui/imgui.cpp
+	src/vendor/imgui/imgui_demo.cpp
+	src/vendor/imgui/imgui_draw.cpp
+	src/vendor/imgui/imgui_widgets.cpp
+	src/vendor/imgui/imgui_tables.cpp    
+)
+include_directories(src/vendor/imgui)
+target_link_libraries(${project_name} imgui ${IMGUI_LIBRARIES})

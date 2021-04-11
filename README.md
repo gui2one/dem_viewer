@@ -1,6 +1,6 @@
 # Starter project
 simple c++ starter project.
-using glfw3 for the windows.
+using glfw3 and ImGui.
 
 
 ## cloning

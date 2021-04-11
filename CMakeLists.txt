@@ -5,6 +5,7 @@ set(project_name starter_project)
 project(${project_name})
 
 # add_definitions(-DDEBUG)
+GLOB_RECURSE fileCollection "src/*.rc" "src/*.cpp" "src/*.c" "src/*.h"
 set(sources
     src/main.cpp
 )

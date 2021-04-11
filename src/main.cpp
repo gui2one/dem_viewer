@@ -10,7 +10,7 @@
 #include "backends/imgui_impl_glfw.h"
 #include "backends/imgui_impl_opengl3.h"
 
-void ImGUiInit(GLFWwindow *window)
+void ImGuiInit(GLFWwindow *window)
 {
     // init ImGui
     // Setup Dear ImGui context
@@ -32,7 +32,7 @@ void ImGUiInit(GLFWwindow *window)
     // end imgui config
     ///////////
 }
-void ImGuiStartFrame()
+void ImGuiBeginFrame()
 {
     // Start the Dear ImGui frame
     ImGui_ImplOpenGL3_NewFrame();
@@ -41,7 +41,6 @@ void ImGuiStartFrame()
 
     ImGui::DockSpaceOverViewport(NULL, ImGuiDockNodeFlags_None | ImGuiDockNodeFlags_PassthruCentralNode /*|ImGuiDockNodeFlags_NoResize*/);
 }
-
 void ImGuiEndFrame()
 {
 
@@ -64,6 +63,7 @@ void ImGuiEndFrame()
         glfwMakeContextCurrent(backup_current_context);
     }
 }
+
 int main(int argc, char **argv)
 {
 
@@ -88,13 +88,13 @@ int main(int argc, char **argv)
         return -1;
     }
 
-    ImGUiInit(window);
+    ImGuiInit(window);
 
     glViewport(0, 0, 640, 360);
     glfwSwapInterval(1);
     while (!glfwWindowShouldClose(window))
     {
-        ImGuiStartFrame();
+        ImGuiBeginFrame();
 
         glClearColor(0.f, 0.f, 0.f, 1.f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -110,6 +110,9 @@ int main(int argc, char **argv)
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
-    printf("Yeah !!!! \n");
+
+    glfwDestroyWindow(window);
+    glfwTerminate();
+    printf("GoodBye... \n");
     return 0;
 }

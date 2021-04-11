@@ -1,6 +1,7 @@
 # Starter project
-simple c++ starter project.
-using glfw3 and ImGui.
+simple c++ starter project using glfw3, GLAD and ImGui.
+
+GLFW and ImGUI are include in src/vendor as git submodules.
 
 
 ## cloning

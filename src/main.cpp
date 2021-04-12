@@ -10,6 +10,9 @@
 #include "backends/imgui_impl_glfw.h"
 #include "backends/imgui_impl_opengl3.h"
 
+#include <glm/glm.hpp>
+#include <glm/gtx/string_cast.hpp>
+
 void ImGuiInit(GLFWwindow *window)
 {
     // init ImGui
@@ -113,6 +116,7 @@ int main(int argc, char **argv)
 
     glfwDestroyWindow(window);
     glfwTerminate();
+
     printf("GoodBye... \n");
     return 0;
 }

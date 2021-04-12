@@ -36,3 +36,6 @@ add_library(imgui STATIC
 )
 include_directories(vendor/imgui)
 target_link_libraries(${project_name} imgui ${IMGUI_LIBRARIES})
+
+#GLM
+include_directories(vendor/glm)

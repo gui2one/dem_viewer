@@ -8,10 +8,41 @@
 #include "Core/PlatformUtils.h"
 
 #include "Core/Mesh.h"
+#include "Core/OpenGLBuffer.h"
+#include "Core/OpenGLVertexArray.h"
 #include "Core/OpenGLFrameBuffer.h"
 
 const int SRTM_SIZE = 1201;
 short height[SRTM_SIZE][SRTM_SIZE] = {0};
+
+Ref<OpenGLVertexBuffer> vertexBuffer = nullptr;
+Ref<OpenGLIndexBuffer> indexBuffer = nullptr;
+Ref<OpenGLVertexArray> vertexArray = nullptr;
+int num_elements;
+
+void buildMeshBuffers()
+{
+
+    Mesh mesh;
+    vertexBuffer.reset(new OpenGLVertexBuffer((float *)mesh.vertices.data(), mesh.vertices.size() * sizeof(Vertex)));
+    // vertexBuffer->bind();
+
+    BufferLayout layout = {
+        {ShaderDataType::Float3, "position"},
+        {ShaderDataType::Float3, "normal"},
+        {ShaderDataType::Float2, "t_coords"}};
+
+    vertexBuffer->setLayout(layout);
+
+    vertexArray = MakeRef<OpenGLVertexArray>();
+    vertexArray->addVertexBuffer(vertexBuffer);
+
+    indexBuffer.reset(new OpenGLIndexBuffer(mesh.indices.data(), mesh.indices.size() * sizeof(int)));
+    vertexArray->setIndexBuffer(indexBuffer);
+    // m_indexBuffer->bind();
+
+    num_elements = (int)mesh.indices.size();
+}
 int main(int argc, char **argv)
 {
 
@@ -62,7 +93,7 @@ int main(int argc, char **argv)
 
     ui.ImGuiInit(window);
 
-    Ref<OpenGLFrameBuffer> frame_buffer = MakeRef<OpenGLFrameBuffer>();
+    Ref<OpenGLFrameBuffer> framebuffer = MakeRef<OpenGLFrameBuffer>();
     std::vector<unsigned char> pixels = tile->toPixels();
 
     OpenGLTexture texture;
@@ -76,6 +107,12 @@ int main(int argc, char **argv)
     glfwSwapInterval(1);
     while (!glfwWindowShouldClose(window))
     {
+
+        framebuffer->bind();
+        glClearColor(.0f, 0.9f, .1f, 1.f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        framebuffer->unbind();
         ui.ImGuiBeginFrame();
 
         glClearColor(.1f, .1f, .1f, 1.f);
@@ -114,10 +151,17 @@ int main(int argc, char **argv)
             ImGui::ShowDemoWindow(&showDemoWindow);
         }
 
-        ImGui::Begin("Image");
-
-        ImGui::Image((void *)(intptr_t)texture.getID(), ImVec2(1201, 1201), ImVec2(0, 0), ImVec2(1, 1), ImColor(255, 255, 255, 255), ImColor(255, 255, 255, 128));
+        ImGuiWindowFlags flags = 0;
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+        ImGui::Begin("2d View");
+        ImGui::Image((void *)(intptr_t)texture.getID(), ImVec2(1201, 1201), ImVec2(0, 0), ImVec2(1, 1));
         ImGui::End();
+
+        ImGui::Begin("3d View");
+        ImGui::Image((void *)(intptr_t)framebuffer->getID(), ImVec2(512, 512), ImVec2(0, 0));
+        ImGui::End();
+
+        ImGui::PopStyleVar(1);
         ui.ImGuiEndFrame();
 
         glfwSwapBuffers(window);

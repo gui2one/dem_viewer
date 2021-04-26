@@ -11,6 +11,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 file(GLOB_RECURSE src_files "src/*.rc" "src/*.cpp" "src/*.c" "src/*.h")
 
 add_executable( ${project_name} #SHARED
+
     ${src_files}
 )
 
@@ -23,6 +24,7 @@ target_include_directories(${project_name}
 	PUBLIC
 		src/
 		vendor/
+
 )
 # GLFW
 add_subdirectory(vendor/glfw)

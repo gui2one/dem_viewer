@@ -7,3 +7,6 @@
 [submodule "vendor/glm"]
 	path = vendor/glm
 	url = https://github.com/g-truc/glm.git
+[submodule "vendor/shapelib"]
+	path = vendor/shapelib
+	url = https://github.com/OSGeo/shapelib.git

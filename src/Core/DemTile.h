@@ -56,12 +56,12 @@ public:
             pixels.emplace_back(final_val);
             pixels.emplace_back(255);
 
-            if (i < 50)
-                std::cout << " Color level : " << (int)final_val << " -- height : " << heights[i] << "\n";
+            // if (i < 50)
+            //     std::cout << " Color level : " << (int)final_val << " -- height : " << heights[i] << "\n";
         }
 
-        std::cout << "num Pixels : " << pixels.size() / 4 << "\n";
-        std::cout << "    Corner Pixel : " << (int)pixels[0] << "\n";
+        // std::cout << "num Pixels : " << pixels.size() / 4 << "\n";
+        // std::cout << "    Corner Pixel : " << (int)pixels[0] << "\n";
 
         return pixels;
     }

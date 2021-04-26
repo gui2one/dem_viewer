@@ -19,4 +19,13 @@
 #include <glm/glm.hpp>
 #include <glm/gtx/string_cast.hpp>
 
+#include "stb_image.h"
+
+// windows stuff
+#include <windows.h>
+#undef near
+#undef far
+#include <commdlg.h>
+#include "psapi.h"
+
 #endif /* PCH_H */

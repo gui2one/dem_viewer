@@ -8,8 +8,7 @@
             "type": "shell",
             "command": "./build__release.bat",
             "group": {
-                "kind": "build",
-                "isDefault": true
+                "kind": "build"
             },
             "presentation": {
                 "reveal": "always"

@@ -173,11 +173,11 @@ int main(int argc, char **argv)
 
         ImGuiWindowFlags flags = 0;
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
-        ImGui::Begin("2d View");
-        ImGui::Image((void *)(intptr_t)texture.getID(), ImVec2(1201, 1201), ImVec2(0, 0), ImVec2(1, 1));
+        ImGui::Begin("2D View");
+        ImGui::Image((void *)(intptr_t)texture.getID(), ImVec2(1201, 1201), ImVec2(0, 0));
         ImGui::End();
 
-        ImGui::Begin("3d View");
+        ImGui::Begin("3D View");
         ImGui::Image((void *)(intptr_t)framebuffer->getID(), ImVec2(512, 512), ImVec2(0, 0));
         ImGui::End();
 

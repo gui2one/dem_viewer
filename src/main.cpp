@@ -90,13 +90,10 @@ int main(int argc, char **argv)
                         std::cout << "Open File : " << path.value() << "\n";
                         auto heights = loader.Load(path.value());
 
-                        // DemTile *new_tile = new DemTile(heights);
-                        auto tile = std::make_shared<DemTile>(heights);
+                        tile = std::make_shared<DemTile>(heights);
                         pixels = tile->toPixels();
 
                         texture.setData(1201, 1201, pixels.data());
-
-                        // delete new_tile;
                     }
                 }
 

@@ -16,8 +16,8 @@ public:
     {
         OPENFILENAMEA ofn;
         char szFile[260];
-        HWND hwnd;
-        HANDLE hf;
+        HWND hwnd = nullptr;
+        HANDLE hf = nullptr;
 
         // Initialize OPENFILENAME
         ZeroMemory(&ofn, sizeof(OPENFILENAME));
@@ -47,8 +47,8 @@ public:
     {
         OPENFILENAMEA ofn;
         char szFile[260];
-        HWND hwnd;
-        HANDLE hf;
+        HWND hwnd = nullptr;
+        HANDLE hf = nullptr;
 
         // Initialize OPENFILENAME
         ZeroMemory(&ofn, sizeof(OPENFILENAME));

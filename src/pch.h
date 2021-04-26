@@ -8,6 +8,13 @@
 #include <vector>
 #include <memory>
 
+// windows stuff
+#include <windows.h>
+#undef near
+#undef far
+#include <commdlg.h>
+#include "psapi.h"
+
 #include <glad/glad.h>
 #include <glfw/glfw3.h>
 
@@ -16,16 +23,11 @@
 #include "backends/imgui_impl_glfw.h"
 #include "backends/imgui_impl_opengl3.h"
 
+// glm
 #include <glm/glm.hpp>
 #include <glm/gtx/string_cast.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 #include "stb_image.h"
-
-// windows stuff
-#include <windows.h>
-#undef near
-#undef far
-#include <commdlg.h>
-#include "psapi.h"
 
 #endif /* PCH_H */

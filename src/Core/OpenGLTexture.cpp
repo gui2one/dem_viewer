@@ -1,5 +1,5 @@
 #include "OpenGLTexture.h"
-#include <glad/glad.h>
+// #include <glad/glad.h>
 
 OpenGLTexture::OpenGLTexture() : id(0), width(0), height(0), bpp(0)
 {

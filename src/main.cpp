@@ -1,10 +1,14 @@
 #include "pch.h"
+#include <core.h>
 
 #include "Core/DemLoader.h"
 #include "UI/UI.h"
 
 #include "Core/OpenGLTexture.h"
 #include "Core/PlatformUtils.h"
+
+#include "Core/Mesh.h"
+#include "Core/OpenGLFrameBuffer.h"
 
 const int SRTM_SIZE = 1201;
 short height[SRTM_SIZE][SRTM_SIZE] = {0};
@@ -25,7 +29,7 @@ int main(int argc, char **argv)
     DemLoader loader;
 
     std::vector<short> heights = loader.Load(dem_file);
-    std::shared_ptr<DemTile> tile = std::make_shared<DemTile>(heights);
+    Ref<DemTile> tile = MakeRef<DemTile>(heights);
     short corner_height = heights[0];
     std::cout << "Corner Height : " << corner_height << "\n";
 
@@ -58,6 +62,7 @@ int main(int argc, char **argv)
 
     ui.ImGuiInit(window);
 
+    Ref<OpenGLFrameBuffer> frame_buffer = MakeRef<OpenGLFrameBuffer>();
     std::vector<unsigned char> pixels = tile->toPixels();
 
     OpenGLTexture texture;

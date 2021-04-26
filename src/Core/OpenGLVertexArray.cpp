@@ -1,5 +1,5 @@
 #include "OpenGLVertexArray.h"
-#include <glad/glad.h>
+// #include <glad/glad.h>
 
 static GLenum ShaderDataTypeToOpenGLBaseType(ShaderDataType type)
 {

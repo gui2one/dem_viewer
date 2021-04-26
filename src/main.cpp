@@ -8,22 +8,31 @@
 #include "Core/PlatformUtils.h"
 
 #include "Core/Mesh.h"
+#include "Core/MeshUtils.h"
 #include "Core/OpenGLBuffer.h"
 #include "Core/OpenGLVertexArray.h"
 #include "Core/OpenGLFrameBuffer.h"
 
-const int SRTM_SIZE = 1201;
-short height[SRTM_SIZE][SRTM_SIZE] = {0};
+#include "Core/Camera.h"
+#include "Core/CameraControls.h"
+
+// const int SRTM_SIZE = 1201;
+// short height[SRTM_SIZE][SRTM_SIZE] = {0};
 
 Ref<OpenGLVertexBuffer> vertexBuffer = nullptr;
 Ref<OpenGLIndexBuffer> indexBuffer = nullptr;
 Ref<OpenGLVertexArray> vertexArray = nullptr;
+
 int num_elements;
+
+Ref<Camera> camera;
+CameraControls controls;
 
 void buildMeshBuffers()
 {
 
     Mesh mesh;
+    mesh = MeshUtils::makeGrid(0.5f, 0.5f, 10, 10);
     vertexBuffer.reset(new OpenGLVertexBuffer((float *)mesh.vertices.data(), mesh.vertices.size() * sizeof(Vertex)));
     // vertexBuffer->bind();
 
@@ -47,6 +56,7 @@ int main(int argc, char **argv)
 {
 
     UI ui;
+    camera = MakeRef<Camera>();
     std::string dem_file = "C:/gui2one/CODE/DEM_files/F44/N20E078.hgt";
     if (argc < 2)
     {
@@ -94,6 +104,8 @@ int main(int argc, char **argv)
     ui.ImGuiInit(window);
 
     Ref<OpenGLFrameBuffer> framebuffer = MakeRef<OpenGLFrameBuffer>();
+
+    buildMeshBuffers();
     std::vector<unsigned char> pixels = tile->toPixels();
 
     OpenGLTexture texture;
@@ -105,12 +117,20 @@ int main(int argc, char **argv)
     glBindTexture(GL_TEXTURE_2D, 0);
     glViewport(0, 0, 640, 360);
     glfwSwapInterval(1);
+
+    controls.init(window, camera);
     while (!glfwWindowShouldClose(window))
     {
+
+        controls.update(0.02f);
 
         framebuffer->bind();
         glClearColor(.0f, 0.9f, .1f, 1.f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        glBindVertexArray(vertexArray->getID());
+        glDrawElements(GL_TRIANGLES, num_elements, GL_UNSIGNED_INT, nullptr);
+        glBindVertexArray(0);
 
         framebuffer->unbind();
         ui.ImGuiBeginFrame();

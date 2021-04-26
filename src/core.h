@@ -1,6 +1,8 @@
 #ifndef CORE_H
 #define CORE_H
 
+const double PI = 3.14159265359;
+
 #include <memory>
 
 template <typename T>

@@ -4,6 +4,9 @@ cmake_minimum_required(VERSION 3.2)
 set(project_name starter_project)
 project(${project_name})
 
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 # add_definitions(-DDEBUG)
 file(GLOB_RECURSE src_files "src/*.rc" "src/*.cpp" "src/*.c" "src/*.h")
 
@@ -11,7 +14,16 @@ add_executable( ${project_name} #SHARED
     ${src_files}
 )
 
+target_precompile_headers(${project_name}
+    PUBLIC
+        src/pch.cpp
+)
 
+target_include_directories(${project_name}
+	PUBLIC
+		src/
+		vendor/
+)
 # GLFW
 add_subdirectory(vendor/glfw)
 

@@ -7,12 +7,13 @@
             "label": "build",
             "type": "shell",
             "command": "./build__release.bat",
-            "group": "build",
-            "presentation": {
-                // Reveal the output only if unrecognized errors occur.
-                "reveal": "silent"
+            "group": {
+                "kind": "build",
+                "isDefault": true
             },
-            // Use the standard MS compiler pattern to detect errors, warnings and infos
+            "presentation": {
+                "reveal": "always"
+            },
             "problemMatcher": "$msCompile"
         },
         {
@@ -21,10 +22,8 @@
             "command": "./build__debug.bat",
             "group": "build",
             "presentation": {
-                // Reveal the output only if unrecognized errors occur.
-                "reveal": "silent"
+                "reveal": "always"
             },
-            // Use the standard MS compiler pattern to detect errors, warnings and infos
             "problemMatcher": "$msCompile"
         },
         {
@@ -33,10 +32,8 @@
             "command": "./build__configure.bat",
             "group": "build",
             "presentation": {
-                // Reveal the output only if unrecognized errors occur.
-                "reveal": "silent"
+                "reveal": "always"
             },
-            // Use the standard MS compiler pattern to detect errors, warnings and infos
             "problemMatcher": "$msCompile"
         }
     ]

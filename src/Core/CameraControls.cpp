@@ -60,3 +60,17 @@ glm::vec3 CameraControls::fromPolar(glm::vec2 uv_pos)
 
     return result;
 }
+
+bool CameraControls::OnEvent(Event &e)
+{
+    Dispatcher dispatcher(e);
+    dispatcher.dispatch<MouseScrollEvent>(BIND_EVENT_FUNCTION(CameraControls::OnMouseWheelEvent));
+
+    return false;
+}
+
+bool CameraControls::OnMouseWheelEvent(Event &e)
+{
+    std::cout << "Mouse Wheel \n";
+    return false;
+}

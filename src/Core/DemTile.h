@@ -2,17 +2,21 @@
 #define DEM_TILE_H
 
 #include <pch.h>
+#include <core.h>
 #include <climits>
 #include <algorithm>
+
+#include "Core/OpenGLTexture.h"
 class DemTile
 {
 public:
     const int SRTM_SIZE = 1201;
-    std::vector<short> heights;
+    std::vector<short> m_heights;
+    Ref<OpenGLTexture> m_texture;
 
 public:
     DemTile() = default;
-    DemTile(std::vector<short> _heights) : heights(_heights){};
+    DemTile(std::vector<short> heights);
 
     ~DemTile() = default;
 
@@ -29,7 +33,7 @@ public:
         for (size_t i = 0; i < SRTM_SIZE * SRTM_SIZE; i++)
         {
 
-            short sample = heights[i];
+            short sample = m_heights[i];
             if (sample != SHRT_MIN && sample < min)
             {
                 min = sample;
@@ -45,7 +49,7 @@ public:
         for (size_t i = 0; i < SRTM_SIZE * SRTM_SIZE; i++)
         {
 
-            short h = heights[i];
+            short h = m_heights[i];
             float mult = (float)(max - min) / (float)SHRT_MAX;
             float f_value = (h) / ((float)SHRT_MAX);
 
@@ -57,7 +61,7 @@ public:
             pixels.emplace_back(255);
 
             // if (i < 50)
-            //     std::cout << " Color level : " << (int)final_val << " -- height : " << heights[i] << "\n";
+            //     std::cout << " Color level : " << (int)final_val << " -- height : " << m_heights[i] << "\n";
         }
 
         // std::cout << "num Pixels : " << pixels.size() / 4 << "\n";

@@ -4,8 +4,9 @@
 #include <core.h>
 #include "Core/Camera.h"
 #include "Core/Input.h"
-// #include "Events/KeyboardEvent.h"
-// #include "Events/MouseEvent.h"
+#include "Events/Event.h"
+#include "Events/KeyboardEvent.h"
+#include "Events/MouseEvent.h"
 
 class CameraControls
 {
@@ -26,12 +27,18 @@ public:
     glm::vec3 fromPolar(glm::vec2 uv_pos);
     void update(float detla_time);
 
+    void setEventCallback(std::function<void(Event &)> callback) { m_callback = callback; }
+    bool OnMouseWheelEvent(Event &e);
+    bool OnEvent(Event &e);
+
 private:
     Ref<Camera> m_camera;
 
     glm::vec2 m_cursorDelta;
 
     glm::vec2 m_cursorOldPos;
+
+    std::function<void(Event &)> m_callback;
 };
 
 #endif /* CAMERA_CONTROLS_H */

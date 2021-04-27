@@ -1,4 +1,4 @@
-#include "pch.h"
+#include <pch.h>
 #include <core.h>
 
 #include "Core/DemLoader.h"
@@ -15,9 +15,10 @@
 
 #include "Core/Camera.h"
 #include "Core/CameraControls.h"
+#include "Core/OpenGLShader.h"
+#include "Core/Timer.h"
 
-// const int SRTM_SIZE = 1201;
-// short height[SRTM_SIZE][SRTM_SIZE] = {0};
+Timer timer;
 
 Ref<OpenGLVertexBuffer> vertexBuffer = nullptr;
 Ref<OpenGLIndexBuffer> indexBuffer = nullptr;
@@ -28,11 +29,17 @@ int num_elements;
 Ref<Camera> camera;
 CameraControls controls;
 
+Ref<OpenGLShader> shader;
+
 void buildMeshBuffers()
 {
 
     Mesh mesh;
-    mesh = MeshUtils::makeGrid(0.5f, 0.5f, 10, 10);
+    mesh = MeshUtils::makeGrid(1.f, 1.f, 1201, 1201);
+    MeshUtils::rotateX(mesh, -PI / 2.0f);
+    MeshUtils::computeNormals(mesh);
+
+    std::cout << glm::to_string(mesh.vertices[0].normal) << "\n";
     vertexBuffer.reset(new OpenGLVertexBuffer((float *)mesh.vertices.data(), mesh.vertices.size() * sizeof(Vertex)));
     // vertexBuffer->bind();
 
@@ -56,11 +63,11 @@ int main(int argc, char **argv)
 {
 
     UI ui;
-    camera = MakeRef<Camera>();
-    std::string dem_file = "C:/gui2one/CODE/DEM_files/F44/N20E078.hgt";
+    camera = MakeRef<Camera>(glm::radians(45.f), 1.0f);
+    std::string dem_file;
     if (argc < 2)
     {
-        dem_file = "C:/gui2one/CODE/DEM_files/F44/N20E078.hgt";
+        dem_file = "C:/gui2one/CODE/DEM_files/K11/N41W118.hgt";
     }
     else
     {
@@ -82,6 +89,8 @@ int main(int argc, char **argv)
     int count;
     GLFWmonitor **monitors = glfwGetMonitors(&count);
 
+    glfwWindowHintString(GLFW_FOCUSED, GLFW_FALSE);
+    glfwWindowHintString(GLFW_FOCUS_ON_SHOW, GLFW_FALSE);
     GLFWwindow *window = glfwCreateWindow(1280, 720, "Starter Project", NULL, NULL);
 
     if (window == NULL)
@@ -91,6 +100,9 @@ int main(int argc, char **argv)
         return -1;
     }
 
+    glfwSetScrollCallback(window, [](GLFWwindow *window, double xoffset, double yoffset) {
+        std::cout << yoffset << "\n";
+    });
     glfwSetWindowPos(window, 100, 100);
     // glfwMaximizeWindow(window);
 
@@ -106,7 +118,13 @@ int main(int argc, char **argv)
     Ref<OpenGLFrameBuffer> framebuffer = MakeRef<OpenGLFrameBuffer>();
 
     buildMeshBuffers();
-    std::vector<unsigned char> pixels = tile->toPixels();
+    shader = MakeRef<OpenGLShader>();
+    shader->loadVertexShaderSource(RESOURCES_DIR "/shaders/phong_shader.vert");
+    shader->loadFragmentShaderSource(RESOURCES_DIR "/shaders/phong_shader.frag");
+    shader->createShader();
+
+    std::vector<unsigned char>
+        pixels = tile->toPixels();
 
     OpenGLTexture texture;
     texture.bind(0);
@@ -119,15 +137,38 @@ int main(int argc, char **argv)
     glfwSwapInterval(1);
 
     controls.init(window, camera);
+
+    glm::vec3 lightPos(1.f, 5.f, 0.f);
+    glm::mat4 model(1.f);
+
     while (!glfwWindowShouldClose(window))
     {
+        timer.update();
+        // controls.setCamera(camera);
+        controls.update(timer.getDeltaTime());
 
-        controls.update(0.02f);
+        glm::mat4 view = glm::mat4(1.0f);
+
+        glm::vec3 up_vector(0.f, 1.f, 0.f);
+        view *= glm::lookAt(
+            camera->position,
+            camera->target_position,
+            glm::normalize(up_vector));
 
         framebuffer->bind();
         glClearColor(.0f, 0.9f, .1f, 1.f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+        shader->useProgram();
+
+        glUniform3fv(glGetUniformLocation(shader->getID(), "u_lightPos"), 1, glm::value_ptr(lightPos));
+        glUniform3fv(glGetUniformLocation(shader->getID(), "u_cameraPos"), 1, glm::value_ptr(camera->position));
+
+        glUniformMatrix4fv(glGetUniformLocation(shader->getID(), "u_model"), 1, GL_FALSE, glm::value_ptr(model));
+        glUniformMatrix4fv(glGetUniformLocation(shader->getID(), "u_projection"), 1, GL_FALSE, glm::value_ptr(camera->projection));
+        glUniformMatrix4fv(glGetUniformLocation(shader->getID(), "u_view"), 1, GL_FALSE, glm::value_ptr(view));
+
+        shader->useProgram();
         glBindVertexArray(vertexArray->getID());
         glDrawElements(GL_TRIANGLES, num_elements, GL_UNSIGNED_INT, nullptr);
         glBindVertexArray(0);
@@ -174,11 +215,11 @@ int main(int argc, char **argv)
         ImGuiWindowFlags flags = 0;
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
         ImGui::Begin("2D View");
-        ImGui::Image((void *)(intptr_t)texture.getID(), ImVec2(1201, 1201), ImVec2(0, 0));
+        ImGui::Image((void *)(intptr_t)texture.getID(), ImVec2(1201, 1201), ImVec2(0, 1), ImVec2(1, 0));
         ImGui::End();
 
         ImGui::Begin("3D View");
-        ImGui::Image((void *)(intptr_t)framebuffer->getID(), ImVec2(512, 512), ImVec2(0, 0));
+        ImGui::Image((void *)(intptr_t)framebuffer->getID(), ImVec2(512, 512), ImVec2(0, 1), ImVec2(1, 0));
         ImGui::End();
 
         ImGui::PopStyleVar(1);

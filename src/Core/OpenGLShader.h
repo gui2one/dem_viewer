@@ -29,7 +29,7 @@ public:
 
 	unsigned int compileShader(unsigned int type, const std::string &source);
 	unsigned int createShader();
-	unsigned int createShader(const std::string &vertexShader, const std::string &fragmentShader);
+
 	std::string getVertexShaderSource();
 	std::string getFragmentShaderSource();
 	uint32_t getID() { return m_id; }

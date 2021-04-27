@@ -8,11 +8,18 @@ void UI::ImGuiInit(GLFWwindow *window)
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO &io = ImGui::GetIO();
-    // io.Fonts->AddFontFromFileTTF(ORBITONS_RES_DIR "/fonts/JetBrainsMono-Regular.ttf", 16);
+
+    io.Fonts->AddFontFromFileTTF(RESOURCES_DIR "/fonts/JetBrainsMono-Regular.ttf", 16);
 
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-    io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+
+    // io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+
+    // io.ConfigViewportsNoAutoMerge = true;
+    // io.ConfigViewportsNoTaskBarIcon = false;
+    // io.ConfigViewportsNoDecoration = true;
+    // io.ConfigViewportsNoDefaultParent = false;
 
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     const char *glsl_version = "#version 130";
@@ -29,6 +36,10 @@ void UI::ImGuiBeginFrame()
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 
+    ImGuiWindowClass windowClass;
+
+    windowClass.ViewportFlagsOverrideSet = ImGuiWindowFlags_NoBringToFrontOnFocus;
+    ImGui::SetNextWindowClass(&windowClass);
     ImGui::DockSpaceOverViewport(NULL, ImGuiDockNodeFlags_None | ImGuiDockNodeFlags_PassthruCentralNode /*|ImGuiDockNodeFlags_NoResize*/);
 }
 void UI::ImGuiEndFrame()

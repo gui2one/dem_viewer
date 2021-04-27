@@ -41,3 +41,13 @@ glm::vec2 Input::getMousePos(GLFWwindow *window)
 
     return glm::vec2((float)x, (float)y);
 }
+
+glm::vec2 Input::getMouseScroll(GLFWwindow *window)
+{
+
+    double x, y;
+
+    glfwGetCursorPos(window, &x, &y);
+
+    return glm::vec2((float)x, (float)y);
+}

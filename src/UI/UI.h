@@ -2,6 +2,7 @@
 #define UI_H
 
 #include <pch.h>
+#include <core.h>
 #include "Core/DemTile.h"
 class UI
 {

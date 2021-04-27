@@ -51,24 +51,6 @@ unsigned int OpenGLShader::compileShader(unsigned int type, const std::string &s
         return id;
 }
 
-unsigned int OpenGLShader::createShader(const std::string &vertexShader, const std::string &fragmentShader)
-{
-        unsigned int program = glCreateProgram();
-        unsigned int vs = compileShader(GL_VERTEX_SHADER, vertexShader);
-        unsigned int fs = compileShader(GL_FRAGMENT_SHADER, fragmentShader);
-
-        glAttachShader(program, vs);
-        glAttachShader(program, fs);
-
-        glLinkProgram(program);
-        glValidateProgram(program);
-
-        glDeleteShader(vs);
-        glDeleteShader(fs);
-
-        return program;
-}
-
 unsigned int OpenGLShader::createShader()
 {
         m_id = glCreateProgram();

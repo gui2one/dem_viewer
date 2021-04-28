@@ -10,3 +10,6 @@
 [submodule "vendor/shapelib"]
 	path = vendor/shapelib
 	url = https://github.com/OSGeo/shapelib.git
+[submodule "vendor/curl"]
+	path = vendor/curl
+	url = https://github.com/curl/curl.git

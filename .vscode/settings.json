@@ -67,6 +67,7 @@
         "xtree": "cpp",
         "xutility": "cpp",
         "optional": "cpp",
-        "shapefil.h": "c"
+        "shapefil.h": "c",
+        "regex": "cpp"
     }
 }

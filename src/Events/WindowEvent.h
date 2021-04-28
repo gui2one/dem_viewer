@@ -41,4 +41,18 @@ public:
 private:
 };
 
+class WindowDropEvent : public WindowEvent
+{
+public:
+    std::vector<std::string> m_dropPaths;
+
+public:
+    WindowDropEvent(std::vector<std::string> str_paths)
+        : m_dropPaths(str_paths)
+    {
+    }
+
+    EVENT_CLASS_TYPE(WindowDrop)
+private:
+};
 #endif /* WINDOW_EVENT_H */

@@ -96,6 +96,23 @@ Window::Window()
         MouseScrollEvent event(xoffset, yoffset);
         data.EventCallback(event);
     });
+
+    glfwSetDropCallback(m_window, [](GLFWwindow *window, int count, const char **paths) {
+        std::vector<std::string> str_paths;
+
+        WindowData &data = *(WindowData *)glfwGetWindowUserPointer(window);
+        for (size_t i = 0; i < count; i++)
+        {
+
+            str_paths.push_back(std::string(paths[i]));
+            // std::cout << paths[i] << "\n";
+        }
+
+        WindowDropEvent event(str_paths);
+        data.EventCallback(event);
+
+        // data.DropPaths = str_paths;
+    });
 }
 
 void Window::refresh(Timer &timer)
@@ -120,13 +137,23 @@ void Window::refresh(Timer &timer)
 
 bool Window::onKeyPressEvent(Event &e)
 {
-
+    printf("space bar pressed\n");
     KeyPressEvent &event = static_cast<KeyPressEvent &>(e);
     if (event.m_Keycode == 57) /*space bar*/
     {
         printf("space bar pressed\n");
         return true;
     }
+    return true;
+}
+
+bool Window::onDropEvent(Event &e)
+{
+    WindowDropEvent &event = static_cast<WindowDropEvent &>(e);
+    std::cout << event.m_dropPaths[0]
+              << "\n";
+
+    m_ui.loadFromFiles(event.m_dropPaths);
     return true;
 }
 
@@ -137,6 +164,7 @@ bool Window::onEvent(Event &e)
 
     Dispatcher dispatcher(e);
     dispatcher.dispatch<KeyPressEvent>(BIND_EVENT_FUNCTION(Window::onKeyPressEvent));
+    dispatcher.dispatch<WindowDropEvent>(BIND_EVENT_FUNCTION(Window::onDropEvent));
 
     return true;
 }

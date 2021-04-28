@@ -14,6 +14,8 @@ public:
     std::vector<short> m_heights;
     Ref<OpenGLTexture> m_texture;
 
+    std::string m_file_name;
+
 public:
     DemTile() = default;
     DemTile(std::vector<short> heights);
@@ -69,6 +71,8 @@ public:
 
         return pixels;
     }
+
+    void setName(const char *_name) { m_file_name = _name; }
 
 private:
 };

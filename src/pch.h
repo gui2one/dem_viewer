@@ -8,6 +8,7 @@
 #include <vector>
 #include <memory>
 #include <chrono>
+#include <regex>
 
 // windows stuff
 #include <windows.h>

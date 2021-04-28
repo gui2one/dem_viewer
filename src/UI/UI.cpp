@@ -1,5 +1,27 @@
 #include "UI.h"
 
+static std::string getFileNameFromPath(std::string path)
+{
+    //string to be searched
+    std::string mystr = "C:/gui2one/CODE/DEM_files/K11/N41W118.hgt";
+
+    // regex expression for pattern to be searched
+    // std::regex regexp("[^\\/]*\\.(\\w+)$");
+    std::regex regexp("[^\\\\]*\\.(\\w+)$");
+
+    // flag type for determining the matching behavior (in this case on string objects)
+    std::smatch m;
+
+    // regex_search that searches pattern regexp in the string mystr
+    std::regex_search(path, m, regexp);
+
+    // std::cout << "String that matches the pattern:" << std::endl;
+    // for (auto x : m)
+    //     std::cout << x << " ";
+
+    return std::string(m[0]);
+}
+
 void UI::ImGuiInit(GLFWwindow *window)
 {
     // init ImGui
@@ -23,7 +45,7 @@ void UI::ImGuiInit(GLFWwindow *window)
     // io.ConfigViewportsNoDefaultParent = false;
 
     ImGui_ImplGlfw_InitForOpenGL(m_window, true);
-    const char *glsl_version = "#version 130";
+    const char *glsl_version = "#version 400";
     ImGui_ImplOpenGL3_Init(glsl_version);
 
     ////////////
@@ -100,6 +122,15 @@ Ref<DemTile> UI::loadDemTile(std::string file_path)
     return tile;
 }
 
+void UI::loadFromFiles(std::vector<std::string> paths)
+{
+    for (auto path : paths)
+    {
+        auto tile = loadDemTile(path);
+        tile->setName(getFileNameFromPath(path).c_str());
+        m_demTiles.push_back(tile);
+    }
+}
 void UI::drawTileList()
 {
 
@@ -113,6 +144,7 @@ void UI::drawTileList()
             {
                 // m_window->m_
                 auto tile = loadDemTile(path.value());
+                tile->setName(getFileNameFromPath(path.value()).c_str());
                 m_demTiles.push_back(tile);
             }
         }
@@ -123,7 +155,7 @@ void UI::drawTileList()
         for (auto tile : m_demTiles)
         {
             ImGui::PushID(inc);
-            if (ImGui::Selectable("azeez", inc == s_selected_tile ? true : false))
+            if (ImGui::Selectable(tile->m_file_name.c_str(), inc == s_selected_tile ? true : false))
             {
                 s_selected_tile = inc;
                 std::cout << s_selected_tile << "\n";

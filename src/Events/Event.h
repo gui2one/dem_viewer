@@ -22,7 +22,8 @@ enum class EventType
     MouseRelease,
     MouseScroll,
     WindowResize,
-    WindowClose
+    WindowClose,
+    WindowDrop
 };
 
 enum EventCategoryFlag

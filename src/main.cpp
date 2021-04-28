@@ -1,6 +1,9 @@
 #include <core.h>
 #include "Core/Application.h"
+
+#include <regex>
 Application *app = Application::getInstance();
+
 int main(int argc, char **argv)
 {
 

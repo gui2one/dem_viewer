@@ -29,6 +29,7 @@ public:
     bool shouldClose();
 
     bool onKeyPressEvent(Event &e);
+    bool onDropEvent(Event &e);
     bool onEvent(Event &e);
     void setEventCallback(std::function<void(Event &)> callback) { m_data.EventCallback = callback; }
 
@@ -46,6 +47,7 @@ private:
         std::string Title;
         unsigned int Width, Height;
         bool VSync;
+        std::vector<std::string> DropPaths;
         std::function<void(Event &)> EventCallback;
     };
 

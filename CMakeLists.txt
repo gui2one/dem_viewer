@@ -35,23 +35,27 @@ target_include_directories(${project_name}
 		vendor/
 
 )
+
+#GLM
+include_directories(vendor/glm)
+
 # GLFW
 add_subdirectory(vendor/glfw)
 
 include_directories(vendor/glfw/include)
 target_link_libraries(${project_name} glfw ${GLFW_LIBRARIES})
 
+# PUGIXML
+option(BUILD_SHARED_AND_STATIC_LIBS "Build both shared and static libraries" ON)
+add_subdirectory(vendor/pugixml)
+
+include_directories(vendor/pugixml/src)
+target_link_libraries(${project_name} pugixml ${PUGIXML_LIBRARIES})
+
 # CURL
-#option(CURL_STATICLIB "Set to ON to build libcurl with static linking."  ON)
-# if(WIN32)
-#     add_definitions("-DCURL_STATICLIB")
-# endif()
 option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
 add_subdirectory(vendor/curl)
 
-
-
-# include_directories(${CURL_INCLUDE_DIR})
 include_directories(vendor/curl/include)
 target_link_libraries(${project_name} libcurl ${LIBCURL_LIBRARIES})
 
@@ -74,5 +78,3 @@ add_library(imgui STATIC
 include_directories(vendor/imgui)
 target_link_libraries(${project_name} imgui ${IMGUI_LIBRARIES})
 
-#GLM
-include_directories(vendor/glm)

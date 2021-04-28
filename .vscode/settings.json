@@ -68,6 +68,7 @@
         "xutility": "cpp",
         "optional": "cpp",
         "shapefil.h": "c",
-        "regex": "cpp"
+        "regex": "cpp",
+        "random": "cpp"
     }
 }

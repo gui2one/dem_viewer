@@ -1,12 +1,16 @@
-#include <core.h>
 #include "Core/Application.h"
-
-#include <regex>
+#include <pugixml.hpp>
+#include <curl/curl.h>
 Application *app = Application::getInstance();
 
 int main(int argc, char **argv)
 {
 
+    pugi::xml_document doc;
+
+    pugi::xml_parse_result result = doc.load_file("C:/Users/Sprayfly/Downloads/Coverage map viewfinderpanoramas.org.html", pugi::parse_default | pugi::parse_comments);
+
+    std::cout << "First node value: [" << doc.first_child().value() << "], node child value: [" << doc.child_value("node") << "]\n";
     app->run();
 
     return 0;

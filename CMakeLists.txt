@@ -45,12 +45,6 @@ add_subdirectory(vendor/glfw)
 include_directories(vendor/glfw/include)
 target_link_libraries(${project_name} glfw ${GLFW_LIBRARIES})
 
-# PUGIXML
-option(BUILD_SHARED_AND_STATIC_LIBS "Build both shared and static libraries" ON)
-add_subdirectory(vendor/pugixml)
-
-include_directories(vendor/pugixml/src)
-target_link_libraries(${project_name} pugixml ${PUGIXML_LIBRARIES})
 
 # CURL
 option(BUILD_SHARED_LIBS "Build shared libraries" OFF)

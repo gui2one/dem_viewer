@@ -1,11 +1,20 @@
 #include "Core/Application.h"
-
+#include <stdio.h>
 #include <curl/curl.h>
 Application *app = Application::getInstance();
 
 int main(int argc, char **argv)
 {
 
+    std::string script = RESOURCES_DIR "/python/list_hgt_files.py";
+    std::string command = "python ";
+
+    command += script;
+    FILE *in = _popen(command.c_str(), "r");
+
+    // fscanf(in, "%s\n", ); // or some other method of reading
+
+    _pclose(in);
     app->run();
     return 0;
 }

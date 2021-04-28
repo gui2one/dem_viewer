@@ -41,6 +41,20 @@ add_subdirectory(vendor/glfw)
 include_directories(vendor/glfw/include)
 target_link_libraries(${project_name} glfw ${GLFW_LIBRARIES})
 
+# CURL
+#option(CURL_STATICLIB "Set to ON to build libcurl with static linking."  ON)
+# if(WIN32)
+#     add_definitions("-DCURL_STATICLIB")
+# endif()
+option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
+add_subdirectory(vendor/curl)
+
+
+
+# include_directories(${CURL_INCLUDE_DIR})
+include_directories(vendor/curl/include)
+target_link_libraries(${project_name} libcurl ${LIBCURL_LIBRARIES})
+
 # GLAD
 add_subdirectory(vendor/glad)
 

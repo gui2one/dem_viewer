@@ -154,6 +154,13 @@ bool Window::onDropEvent(Event &e)
               << "\n";
 
     m_ui.loadFromFiles(event.m_dropPaths);
+
+    /*
+        set focus to window.
+        Right now it's not because user just dragged and dropped files onto it.
+    
+    */
+    glfwShowWindow(m_window);
     return true;
 }
 

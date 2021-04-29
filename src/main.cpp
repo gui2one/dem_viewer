@@ -1,20 +1,21 @@
 #include "Core/Application.h"
 #include <stdio.h>
 #include <curl/curl.h>
+#include "Core/Utils.h"
 Application *app = Application::getInstance();
 
 int main(int argc, char **argv)
 {
+    Utils::refreshFileList();
+    std::vector<std::string> files = Utils::getFilesList();
 
-    std::string script = RESOURCES_DIR "/python/list_hgt_files.py";
-    std::string command = "python ";
+    // int inc = 0;
+    // for (auto file : files)
+    // {
+    //     std::cout << inc + 1 << "--" << file << "\n";
 
-    command += script;
-    FILE *in = _popen(command.c_str(), "r");
-
-    // fscanf(in, "%s\n", ); // or some other method of reading
-
-    _pclose(in);
+    //     inc++;
+    // }
     app->run();
     return 0;
 }

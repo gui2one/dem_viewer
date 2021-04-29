@@ -149,6 +149,7 @@ void UI::drawTileList()
             }
         }
 
+        ImGui::SetNextItemWidth(-1);
         ImGui::BeginListBox("##tiles");
 
         int inc = 0;

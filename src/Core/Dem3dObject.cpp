@@ -5,11 +5,18 @@ Dem3dObject::Dem3dObject()
     std::cout << "3d Object\n";
 }
 
-void Dem3dObject::buildVAO()
+void Dem3dObject::buildVAO(std::vector<short> heights)
 {
     Mesh mesh;
     mesh = MeshUtils::makeGrid(1.f, 1.f, 1201, 1201);
     MeshUtils::rotateX(mesh, -PI / 2.0f);
+
+    size_t inc = 0;
+    for (auto &vertex : mesh.vertices)
+    {
+        vertex.position.y = (float)heights[inc] / (float)SHRT_MAX;
+        inc++;
+    }
     MeshUtils::computeNormals(mesh);
 
     std::cout << glm::to_string(mesh.vertices[0].normal) << "\n";

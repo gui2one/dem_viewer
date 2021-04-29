@@ -61,16 +61,24 @@ glm::vec3 CameraControls::fromPolar(glm::vec2 uv_pos)
     return result;
 }
 
-bool CameraControls::OnEvent(Event &e)
+bool CameraControls::onEvent(Event &e)
 {
     Dispatcher dispatcher(e);
-    dispatcher.dispatch<MouseScrollEvent>(BIND_EVENT_FUNCTION(CameraControls::OnMouseWheelEvent));
+    dispatcher.dispatch<MouseScrollEvent>(BIND_EVENT_FUNCTION(CameraControls::onMouseScrollEvent));
 
     return false;
 }
 
-bool CameraControls::OnMouseWheelEvent(Event &e)
+bool CameraControls::onMouseScrollEvent(Event &e)
 {
-    std::cout << "Mouse Wheel \n";
+    if (activated)
+    {
+        MouseScrollEvent &event = static_cast<MouseScrollEvent &>(e);
+        // std::cout << event.m_yoffset << "\n";
+
+        m_radius *= event.m_yoffset > 0.f ? 0.9f : 1.1f;
+        return true;
+    }
+
     return false;
 }

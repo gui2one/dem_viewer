@@ -9,5 +9,5 @@ DemTile::DemTile(std::vector<short> heights)
     m_texture->setData(SRTM_SIZE, SRTM_SIZE, pixels.data());
 
     m_object = MakeRef<Dem3dObject>();
-    m_object->buildVAO();
+    m_object->buildVAO(m_heights);
 };

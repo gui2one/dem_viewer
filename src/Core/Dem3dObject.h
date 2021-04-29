@@ -18,7 +18,7 @@ public:
 public:
     Dem3dObject();
 
-    void buildVAO();
+    void buildVAO(std::vector<short> heights);
     void draw();
 
 private:

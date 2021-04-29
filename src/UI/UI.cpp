@@ -130,7 +130,8 @@ void UI::render3DView()
         glm::normalize(up_vector));
     m_frameBuffer->bind();
 
-    glClearColor(.0f, 0.f, .8f, 1.f);
+    glEnable(GL_DEPTH_TEST);
+    glClearColor(.2f, .2f, .2f, 1.f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     auto tile = m_demTiles[s_selected_tile];
@@ -255,7 +256,9 @@ void UI::displayDemTile3D(float delta_time)
 {
     ImGuiWindowFlags flags = 0;
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+
     ImGui::Begin("3D View");
+
     if (m_demTiles.size() > 0)
     {
         if (s_selected_tile != -1)
@@ -263,6 +266,14 @@ void UI::displayDemTile3D(float delta_time)
             ImVec2 avail_size = ImGui::GetContentRegionAvail();
             render3DView();
             ImGui::Image((void *)(intptr_t)m_frameBuffer->getID(), avail_size, ImVec2(0, 1), ImVec2(1, 0));
+            if (ImGui::IsItemHovered())
+            {
+                m_controls.activated = true;
+            }
+            else
+            {
+                m_controls.activated = false;
+            }
         }
     }
 

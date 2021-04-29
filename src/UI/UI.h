@@ -18,6 +18,10 @@
 
 class UI
 {
+
+public:
+    CameraControls m_controls;
+
 public:
     void ImGuiInit(GLFWwindow *window);
 
@@ -39,7 +43,6 @@ private:
     DemLoader m_loader;
     GLFWwindow *m_window;
 
-    CameraControls m_controls;
     Ref<OpenGLFrameBuffer> m_frameBuffer;
     std::vector<Ref<DemTile>> m_demTiles;
     int s_selected_tile = -1;

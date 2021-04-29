@@ -20,6 +20,7 @@ Application::Application()
 
     m_window = std::make_unique<Window>();
     m_window->setEventCallback(BIND_EVENT_FUNCTION(Application::onEvent));
+    m_window->m_ui.m_controls.setEventCallback(BIND_EVENT_FUNCTION(Application::onEvent));
 }
 
 void Application::run()
@@ -44,6 +45,7 @@ void Application::onEvent(Event &e)
     // m_window->m_ui.onEvent(e);
     // m_window->m_controls.onEvent(e);
     m_window->onEvent(e);
+    m_window->m_ui.m_controls.onEvent(e);
 
     // printf("[Application Event] %s\n", e.GetName());
 }

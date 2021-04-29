@@ -28,8 +28,8 @@ public:
     void update(float detla_time);
 
     void setEventCallback(std::function<void(Event &)> callback) { m_callback = callback; }
-    bool OnMouseWheelEvent(Event &e);
-    bool OnEvent(Event &e);
+    bool onMouseScrollEvent(Event &e);
+    bool onEvent(Event &e);
 
 private:
     Ref<Camera> m_camera;

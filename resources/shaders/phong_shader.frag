@@ -25,7 +25,7 @@ uniform Material material;
 
 void main() {
 
-    float shininess = 50.0;
+    float shininess = 2.0;
     vec3 lightColor = vec3(1,1,1);
     vec3 normal = normalize(f_normal);
 
@@ -34,12 +34,12 @@ void main() {
     vec3 halfwayDir = normalize(lightDir + viewDir);
     
     float spec = pow(max(dot(normal, halfwayDir), 0.0), shininess);
-    vec3 specular = lightColor * spec * vec3(1.0,0.0,0.0);
+    vec3 specular = lightColor * spec * material.specularColor;
     
     float diff = max(dot(normal, lightDir),0.0);
     
     vec4 diffTextureColor = texture(material.diffuseTexture, f_coords);
-    gl_FragColor = vec4( vec3(specular), 1.0);
+    gl_FragColor = vec4( vec3(diff+specular), 1.0);
     // gl_FragColor = vec4( diff * material.diffuseColor * diffTextureColor.rgb + specular, 1.0);
 //   gl_FragColor = vec4(normalize(f_normal), 1.0);
 }

@@ -51,7 +51,7 @@ void OpenGLVertexArray::unbind()
     glBindVertexArray(0);
 }
 
-void OpenGLVertexArray::addVertexBuffer(const std::shared_ptr<OpenGLVertexBuffer> &vertexBuffer)
+void OpenGLVertexArray::addVertexBuffer(const Ref<OpenGLVertexBuffer> &vertexBuffer)
 {
     int inc = 0;
 
@@ -76,7 +76,7 @@ void OpenGLVertexArray::addVertexBuffer(const std::shared_ptr<OpenGLVertexBuffer
     }
 }
 
-void OpenGLVertexArray::setIndexBuffer(const std::shared_ptr<OpenGLIndexBuffer> &indexBuffer)
+void OpenGLVertexArray::setIndexBuffer(const Ref<OpenGLIndexBuffer> &indexBuffer)
 {
     m_indexBuffer = indexBuffer;
 }

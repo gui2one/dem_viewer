@@ -2,6 +2,7 @@
 #define VERTEX_ARRAY_BUFFER_H
 
 #include <pch.h>
+#include <core.h>
 #include "Core/OpenGLBuffer.h"
 #include "Core/Mesh.h"
 
@@ -14,15 +15,15 @@ public:
     void bind();
     void unbind();
 
-    void addVertexBuffer(const std::shared_ptr<OpenGLVertexBuffer> &vertexBuffer);
-    void setIndexBuffer(const std::shared_ptr<OpenGLIndexBuffer> &indexBuffer);
+    void addVertexBuffer(const Ref<OpenGLVertexBuffer> &vertexBuffer);
+    void setIndexBuffer(const Ref<OpenGLIndexBuffer> &indexBuffer);
 
     uint32_t getID() { return m_id; };
 
 private:
     uint32_t m_id;
-    std::vector<std::shared_ptr<OpenGLVertexBuffer>> m_vertexBuffers;
-    std::shared_ptr<OpenGLIndexBuffer> m_indexBuffer;
+    std::vector<Ref<OpenGLVertexBuffer>> m_vertexBuffers;
+    Ref<OpenGLIndexBuffer> m_indexBuffer;
 };
 
 #endif /* VERTEX_ARRAY_BUFFER_H */

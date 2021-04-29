@@ -51,6 +51,17 @@ void UI::ImGuiInit(GLFWwindow *window)
     ////////////
     // end imgui config
     ///////////
+
+    m_frameBuffer = MakeRef<OpenGLFrameBuffer>();
+
+    m_shader = MakeRef<OpenGLShader>();
+    m_shader->loadVertexShaderSource(RESOURCES_DIR "/shaders/phong_shader.vert");
+    m_shader->loadFragmentShaderSource(RESOURCES_DIR "/shaders/phong_shader.frag");
+    m_shader->createShader();
+
+    m_camera = MakeRef<Camera>(glm::radians(45.0f), 1.0f);
+
+    m_controls.init(m_window, m_camera);
 }
 
 void UI::ImGuiBeginFrame()
@@ -90,6 +101,55 @@ void UI::ImGuiEndFrame()
     }
 }
 
+void UI::render(Timer &timer)
+{
+
+    m_controls.update(timer.getDeltaTime());
+    ImGuiBeginFrame();
+
+    drawMainMenu();
+
+    drawTileList();
+
+    displayDemTile();
+    displayDemTile3D(timer.getDeltaTime());
+
+    ImGuiEndFrame();
+}
+
+void UI::render3DView()
+{
+    glm::mat4 view = glm::mat4(1.0f);
+    glm::mat4 model = glm::mat4(1.0f);
+
+    glm::vec3 lightPos(1.f, 1.f, 1.f);
+    glm::vec3 up_vector(0.f, 1.f, 0.f);
+    view *= glm::lookAt(
+        m_camera->position,
+        m_camera->target_position,
+        glm::normalize(up_vector));
+    m_frameBuffer->bind();
+
+    glClearColor(.0f, 0.f, .8f, 1.f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    auto tile = m_demTiles[s_selected_tile];
+
+    m_shader->useProgram();
+
+    glUniform3fv(glGetUniformLocation(m_shader->getID(), "u_lightPos"), 1, glm::value_ptr(lightPos));
+    glUniform3fv(glGetUniformLocation(m_shader->getID(), "u_cameraPos"), 1, glm::value_ptr(m_camera->position));
+
+    glUniformMatrix4fv(glGetUniformLocation(m_shader->getID(), "u_model"), 1, GL_FALSE, glm::value_ptr(model));
+    glUniformMatrix4fv(glGetUniformLocation(m_shader->getID(), "u_projection"), 1, GL_FALSE, glm::value_ptr(m_camera->projection));
+    glUniformMatrix4fv(glGetUniformLocation(m_shader->getID(), "u_view"), 1, GL_FALSE, glm::value_ptr(view));
+
+    // m_shader->useProgram();
+
+    tile->m_object->draw();
+    glUseProgram(0);
+    m_frameBuffer->unbind();
+}
 void UI::drawMainMenu()
 {
     if (ImGui::BeginMainMenuBar())
@@ -172,6 +232,7 @@ void UI::drawTileList()
         ImGui::EndListBox();
     }
 }
+
 void UI::displayDemTile()
 {
     ImGuiWindowFlags flags = 0;
@@ -186,6 +247,25 @@ void UI::displayDemTile()
             ImGui::Image((void *)(intptr_t)cur_tile->m_texture->getID(), ImVec2(1201, 1201), ImVec2(0, 1), ImVec2(1, 0));
         }
     }
+    ImGui::End();
+    ImGui::PopStyleVar(1);
+}
+
+void UI::displayDemTile3D(float delta_time)
+{
+    ImGuiWindowFlags flags = 0;
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+    ImGui::Begin("3D View");
+    if (m_demTiles.size() > 0)
+    {
+        if (s_selected_tile != -1)
+        {
+            ImVec2 avail_size = ImGui::GetContentRegionAvail();
+            render3DView();
+            ImGui::Image((void *)(intptr_t)m_frameBuffer->getID(), avail_size, ImVec2(0, 1), ImVec2(1, 0));
+        }
+    }
+
     ImGui::End();
     ImGui::PopStyleVar(1);
 }

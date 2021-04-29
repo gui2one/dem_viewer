@@ -48,7 +48,7 @@ Window::Window()
     /* set callbacks */
     glfwSetKeyCallback(m_window, [](GLFWwindow *window, int key, int scancode, int action, int mods) {
         ImGui_ImplGlfw_KeyCallback(window, key, scancode, action, mods);
-        std::cout << "Key callback\n";
+        // std::cout << "Key callback\n";
         WindowData &data = *(WindowData *)glfwGetWindowUserPointer(window);
 
         switch (action)
@@ -121,23 +121,22 @@ void Window::refresh(Timer &timer)
     glClearColor(.1f, .1f, .1f, 1.f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    m_ui.ImGuiBeginFrame();
-
-    m_ui.drawMainMenu();
-
-    m_ui.drawTileList();
-
-    m_ui.displayDemTile();
-
-    m_ui.ImGuiEndFrame();
+    m_ui.render(timer);
     glfwPollEvents();
 
     glfwSwapBuffers(m_window);
 }
 
+bool Window::onMouseScrollEvent(Event &e)
+{
+    MouseScrollEvent &event = static_cast<MouseScrollEvent &>(e);
+    std::cout << event.m_yoffset << "\n";
+    return true;
+}
+
 bool Window::onKeyPressEvent(Event &e)
 {
-    printf("space bar pressed\n");
+
     KeyPressEvent &event = static_cast<KeyPressEvent &>(e);
     if (event.m_Keycode == 57) /*space bar*/
     {
@@ -172,6 +171,7 @@ bool Window::onEvent(Event &e)
     Dispatcher dispatcher(e);
     dispatcher.dispatch<KeyPressEvent>(BIND_EVENT_FUNCTION(Window::onKeyPressEvent));
     dispatcher.dispatch<WindowDropEvent>(BIND_EVENT_FUNCTION(Window::onDropEvent));
+    dispatcher.dispatch<MouseScrollEvent>(BIND_EVENT_FUNCTION(Window::onMouseScrollEvent));
 
     return true;
 }

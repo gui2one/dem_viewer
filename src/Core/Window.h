@@ -18,8 +18,6 @@ class Window
 {
 
 public:
-    CameraControls m_controls;
-
     UI m_ui;
 
 public:
@@ -28,10 +26,12 @@ public:
     void refresh(Timer &timer);
     bool shouldClose();
 
-    bool onKeyPressEvent(Event &e);
-    bool onDropEvent(Event &e);
     bool onEvent(Event &e);
     void setEventCallback(std::function<void(Event &)> callback) { m_data.EventCallback = callback; }
+
+    bool onKeyPressEvent(Event &e);
+    bool onDropEvent(Event &e);
+    bool onMouseScrollEvent(Event &e);
 
     GLFWwindow *getNativeWindow() const { return m_window; }
 
@@ -39,7 +39,7 @@ private:
     GLFWwindow *m_window;
 
     std::function<void(Event &)> m_callback;
-    Ref<OpenGLFrameBuffer> m_frameBuffer;
+    // Ref<OpenGLFrameBuffer> m_frameBuffer;
 
     struct WindowData
     {

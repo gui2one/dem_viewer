@@ -7,6 +7,7 @@
 #include <algorithm>
 
 #include "Core/OpenGLTexture.h"
+#include "Core/Dem3dObject.h"
 class DemTile
 {
 public:
@@ -15,6 +16,8 @@ public:
     Ref<OpenGLTexture> m_texture;
 
     std::string m_file_name;
+
+    Ref<Dem3dObject> m_object;
 
 public:
     DemTile() = default;

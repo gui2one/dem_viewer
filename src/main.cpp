@@ -6,7 +6,7 @@ Application *app = Application::getInstance();
 
 int main(int argc, char **argv)
 {
-    Utils::refreshFileList();
+    // Utils::refreshFileList();
     std::vector<std::string> files = Utils::getFilesList();
 
     // int inc = 0;

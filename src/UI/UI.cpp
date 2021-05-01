@@ -180,6 +180,7 @@ Ref<DemTile> UI::loadDemTile(std::string file_path)
 {
 
     Ref<DemTile> tile = MakeRef<DemTile>(m_loader.Load(file_path));
+
     return tile;
 }
 

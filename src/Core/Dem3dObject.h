@@ -1,6 +1,7 @@
 #ifndef DEM_3D_OBJECT_H
 #define DEM_3D_OBJECT_H
 
+#include <pch.h>
 #include <core.h>
 #include "Entity3d.h"
 

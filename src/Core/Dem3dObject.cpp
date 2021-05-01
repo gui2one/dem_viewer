@@ -11,12 +11,17 @@ void Dem3dObject::buildVAO(std::vector<short> heights)
     mesh = MeshUtils::makeGrid(1.f, 1.f, 1201, 1201);
     MeshUtils::rotateX(mesh, -PI / 2.0f);
 
-    size_t inc = 0;
-    for (auto &vertex : mesh.vertices)
+    std::cout << " num vertices " << mesh.vertices.size() << std::endl;
+
+    for (size_t i = 0; i < mesh.vertices.size(); i++)
     {
-        vertex.position.y = (float)heights[inc] / (float)SHRT_MAX;
-        inc++;
+        Vertex &vertex = mesh.vertices[i];
+
+        vertex.position.y = (float)heights[i] / (float)SHRT_MAX;
     }
+
+    // cols test
+
     MeshUtils::computeNormals(mesh);
 
     std::cout << glm::to_string(mesh.vertices[0].normal) << "\n";

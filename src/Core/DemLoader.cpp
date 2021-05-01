@@ -2,7 +2,7 @@
 
 std::vector<short> DemLoader::Load(std::string file_path)
 {
-    std::vector<short> heights = {SHRT_MIN};
+    std::vector<short> heights;
     const int SRTM_SIZE = 1201;
     std::ifstream file(file_path, std::ios::in | std::ios::binary);
     if (!file)
@@ -12,7 +12,7 @@ std::vector<short> DemLoader::Load(std::string file_path)
     }
 
     unsigned char buffer[2];
-    for (int i = 0; i < SRTM_SIZE * SRTM_SIZE; ++i)
+    for (int i = 0; i < SRTM_SIZE * SRTM_SIZE; i++)
     {
 
         if (!file.read(reinterpret_cast<char *>(buffer), sizeof(buffer)))

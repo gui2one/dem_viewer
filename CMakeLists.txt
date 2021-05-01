@@ -1,9 +1,10 @@
 cmake_minimum_required(VERSION 3.2)
 
 
-set(project_name starter_project)
+set(project_name dem_viewer)
 project(${project_name})
 
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS "/MP /arch:AVX2 /EHsc")
@@ -33,8 +34,14 @@ target_include_directories(${project_name}
 	PUBLIC
 		src/
 		vendor/
+		vendor/glad/include
 
 )
+# GLAD
+add_subdirectory(vendor/glad)
+
+target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC vendor/glad/include)
+target_link_libraries(${project_name} glad ${GLAD_LIBRARIES})
 
 #GLM
 include_directories(vendor/glm)
@@ -53,11 +60,7 @@ add_subdirectory(vendor/curl)
 include_directories(vendor/curl/include)
 target_link_libraries(${project_name} libcurl ${LIBCURL_LIBRARIES})
 
-# GLAD
-add_subdirectory(vendor/glad)
 
-include_directories(vendor/glad/include)
-target_link_libraries(${project_name} glad ${GLAD_LIBRARIES})
 
 #ImGUI
 add_library(imgui STATIC

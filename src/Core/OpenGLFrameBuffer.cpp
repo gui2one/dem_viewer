@@ -4,7 +4,7 @@
 OpenGLFrameBuffer::OpenGLFrameBuffer()
 {
     // printf("creating frameBuffer\n");
-    invalidate(400, 400);
+    invalidate(1000, 1000);
 }
 
 OpenGLFrameBuffer::~OpenGLFrameBuffer()

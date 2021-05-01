@@ -265,6 +265,8 @@ void UI::displayDemTile3D(float delta_time)
         if (s_selected_tile != -1)
         {
             ImVec2 avail_size = ImGui::GetContentRegionAvail();
+            m_frameBuffer->invalidate(avail_size.x, avail_size.y);
+            m_camera->setScreenRatio(avail_size.x / avail_size.y);
             render3DView();
             ImGui::Image((void *)(intptr_t)m_frameBuffer->getID(), avail_size, ImVec2(0, 1), ImVec2(1, 0));
             if (ImGui::IsItemHovered())

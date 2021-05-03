@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <pch.h>
 #include <core.h>
+
 namespace Utils
 {
     static void refreshFileList()
@@ -40,6 +41,16 @@ namespace Utils
         }
         std::cout << result.size() << " hgt files Found.\n";
         return result;
+    }
+
+    static float radians(float degrees)
+    {
+        return degrees / 360.0f * PI * 2.0;
+    }
+    static float degreeSizeAtLatitude(float latitude)
+    {
+        const float one_degree_at_equator = 111.0f;
+        return one_degree_at_equator * cosf(radians(abs(latitude)));
     }
 }
 

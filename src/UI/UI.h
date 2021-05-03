@@ -33,6 +33,7 @@ public:
     void drawMainMenu();
 
     Ref<DemTile> loadDemTile(std::string file_path);
+    void loadFromFile(std::string path);
     void loadFromFiles(std::vector<std::string> paths);
 
     void drawTileList();

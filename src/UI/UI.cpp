@@ -151,11 +151,11 @@ void UI::render3DView()
     glUseProgram(0);
     m_frameBuffer->unbind();
 }
+
 void UI::drawMainMenu()
 {
     if (ImGui::BeginMainMenuBar())
     {
-
         if (ImGui::BeginMenu("File"))
         {
             if (ImGui::MenuItem("Open ..."))
@@ -164,14 +164,11 @@ void UI::drawMainMenu()
 
                 if (path)
                 {
-                    // m_window->m_
-                    loadDemTile(path.value());
+                    loadFromFile(path.value());
                 }
             }
-
             ImGui::EndMenu();
         }
-
         ImGui::EndMainMenuBar();
     }
 }
@@ -184,15 +181,22 @@ Ref<DemTile> UI::loadDemTile(std::string file_path)
     return tile;
 }
 
+void UI::loadFromFile(std::string path)
+{
+
+    auto tile = loadDemTile(path);
+    tile->setName(getFileNameFromPath(path).c_str());
+    m_demTiles.push_back(tile);
+}
+
 void UI::loadFromFiles(std::vector<std::string> paths)
 {
     for (auto path : paths)
     {
-        auto tile = loadDemTile(path);
-        tile->setName(getFileNameFromPath(path).c_str());
-        m_demTiles.push_back(tile);
+        loadFromFile(path);
     }
 }
+
 void UI::drawTileList()
 {
 

@@ -5,8 +5,8 @@
 #include <core.h>
 #include "Entity3d.h"
 
-#include "OpenGLBuffer.h"
-#include "OpenGLVertexArray.h"
+#include "Render/OpenGLBuffer.h"
+#include "Render/OpenGLVertexArray.h"
 class Dem3dObject : public Entity3d
 {
 public:

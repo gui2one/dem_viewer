@@ -8,8 +8,8 @@
 #include "Core/DemLoader.h"
 #include "Core/Timer.h"
 
-#include "Core/OpenGLFrameBuffer.h"
-#include "Core/OpenGLShader.h"
+#include "Render/OpenGLFrameBuffer.h"
+#include "Render/OpenGLShader.h"
 
 #include "Core/Camera.h"
 #include "Core/CameraControls.h"

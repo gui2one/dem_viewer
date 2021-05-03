@@ -3,7 +3,7 @@
 
 #include <pch.h>
 #include <core.h>
-#include "Core/OpenGLBuffer.h"
+#include "Render/OpenGLBuffer.h"
 #include "Core/Mesh.h"
 
 class OpenGLVertexArray

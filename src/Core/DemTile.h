@@ -6,7 +6,7 @@
 #include <climits>
 #include <algorithm>
 
-#include "Core/OpenGLTexture.h"
+#include "Render/OpenGLTexture.h"
 #include "Core/Dem3dObject.h"
 class DemTile
 {

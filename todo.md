@@ -1,3 +1,4 @@
-display correct height in 3d view.
+# TODOS 
 
-display db files on a map.
+* display correct height in 3d view.
+* display db files on a map.

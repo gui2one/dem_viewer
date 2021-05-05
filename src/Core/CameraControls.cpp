@@ -3,8 +3,8 @@
 CameraControls::CameraControls()
     : m_window(nullptr),
       m_camera(nullptr),
-      m_uvPos(glm::vec2(PI * 0.9f, PI / 2.2f)),
-      m_radius(5.0f),
+      m_uvPos(glm::vec2(PI * 0.9f, PI / 2.6f)),
+      m_radius(1.2f),
       m_cursorDelta(glm::vec2(0.f)),
       m_cursorOldPos(glm::vec2(0.f))
 {
@@ -13,8 +13,8 @@ CameraControls::CameraControls()
 CameraControls::CameraControls(GLFWwindow *window, Ref<Camera> &camera)
     : m_window(window),
       m_camera(camera),
-      m_uvPos(glm::vec2(PI * 0.9f, PI / 2.2f)),
-      m_radius(5.0f),
+      m_uvPos(glm::vec2(PI * 0.9f, PI / 2.6f)),
+      m_radius(1.2f),
       m_cursorDelta(glm::vec2(0.f)),
       m_cursorOldPos(glm::vec2(0.f))
 {
@@ -31,7 +31,8 @@ void CameraControls::update(float delta_time)
     if (activated)
     {
 
-        if (Input::isKeyPressed(m_window, GLFW_KEY_LEFT_ALT) && Input::isMouseButtonClicked(m_window, 0))
+        // if (Input::isKeyPressed(m_window, GLFW_KEY_LEFT_ALT) && Input::isMouseButtonClicked(m_window, 0))
+        if (Input::isMouseButtonClicked(m_window, 0))
         {
 
             m_cursorDelta = Input::getMousePos(m_window) - m_cursorOldPos;

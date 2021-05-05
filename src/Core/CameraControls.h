@@ -16,7 +16,7 @@ public:
     float m_radius;
     GLFWwindow *m_window;
 
-    bool activated = true;
+    bool activated = false;
 
 public:
     CameraControls();

@@ -63,6 +63,7 @@ target_link_libraries(${project_name} libcurl ${LIBCURL_LIBRARIES})
 
 
 #ImGUI
+set(-DIMGUI_IMPL_OPENGL_LOADER_GLAD)
 add_library(imgui STATIC
 	vendor/imgui/backends/imgui_impl_opengl3.cpp
 	vendor/imgui/backends/imgui_impl_glfw.cpp

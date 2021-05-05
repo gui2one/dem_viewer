@@ -195,6 +195,8 @@ void UI::loadFromFiles(std::vector<std::string> paths)
     {
         loadFromFile(path);
     }
+
+    s_selected_tile = m_demTiles.size() - 1;
 }
 
 void UI::drawTileList()
@@ -260,9 +262,12 @@ void UI::displayDemTile()
 void UI::displayDemTile3D(float delta_time)
 {
     ImGuiWindowFlags flags = 0;
+    if (m_controls.activated)
+        flags |= ImGuiWindowFlags_NoMove;
+
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 
-    ImGui::Begin("3D View");
+    ImGui::Begin("3D View", NULL, flags);
 
     if (m_demTiles.size() > 0)
     {

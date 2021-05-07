@@ -39,6 +39,10 @@ target_include_directories(${CMAKE_PROJECT_NAME}
 		vendor/glad/include
 
 )
+
+# Simple JSON
+target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC vendor/SimpleJSON)
+
 # GLAD
 add_subdirectory(vendor/glad)
 

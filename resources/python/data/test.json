@@ -1,0 +1,20 @@
+{
+    "level_0": {
+        "tiles": [
+            {
+                "name": "tile_name",
+                "coords": [
+                    0.0,
+                    42.0
+                ]
+            },
+            {
+                "name": "tile_name_2",
+                "coords": [
+                    3.14,
+                    42.0
+                ]
+            }
+        ]
+    }
+}

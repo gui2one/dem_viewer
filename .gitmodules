@@ -19,3 +19,6 @@
 [submodule "vendor/SimpleJSON"]
 	path = vendor/SimpleJSON
 	url = https://github.com/nbsdx/SimpleJSON.git
+[submodule "vendor/libtiff"]
+	path = vendor/libtiff
+	url = https://gitlab.com/libtiff/libtiff.git

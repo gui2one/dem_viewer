@@ -15,12 +15,23 @@
 #include "Core/CameraControls.h"
 
 #include "Core/PlatformUtils.h"
+#include "TileMapViewer/TileMapViewer.h"
+
+struct AppOptions
+{
+    std::string heightFilesDBPath;
+    std::string tileTexturesPath;
+};
 
 class UI
 {
 
 public:
     CameraControls m_controls;
+    TileMapViewer m_tileMapViewer;
+
+    AppOptions m_options;
+    bool m_displayAppOptions = true;
 
 public:
     void ImGuiInit(GLFWwindow *window);
@@ -39,6 +50,8 @@ public:
     void drawTileList();
     void displayDemTile();
     void displayDemTile3D(float delta_time);
+
+    void drawAppOtions();
 
 private:
     DemLoader m_loader;

@@ -70,5 +70,6 @@
         "shapefil.h": "c",
         "regex": "cpp",
         "random": "cpp"
-    }
+    },
+    "C_Cpp.intelliSenseEngineFallback": "Disabled"
 }

@@ -25,7 +25,7 @@ namespace Utils
     {
         std::vector<std::string> result;
 
-        std::ifstream inFile(RESOURCES_DIR "/python/files_list.txt");
+        std::ifstream inFile(RESOURCES_DIR "/python/hgt_files_list.txt");
 
         if (!inFile)
         {
@@ -49,7 +49,7 @@ namespace Utils
     }
     static float degreeSizeAtLatitude(float latitude)
     {
-        const float one_degree_at_equator = 111.0f;
+        const float one_degree_at_equator = 111.319f;
         return one_degree_at_equator * cosf(radians(abs(latitude)));
     }
 }

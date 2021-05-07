@@ -1,9 +1,10 @@
 #ifndef PLATFORM_UTILS_H
 #define PLATFORM_UTILS_H
 
+#include <pch.h>
 #include <Windows.h>
+
 #include <optional>
-#include "pch.h"
 
 // #define GLFW_EXPOSE_NATIVE_WIN32
 // #include <GLFW/glfw3.h>
@@ -45,6 +46,7 @@ public:
 
     static std::optional<std::string> saveFileDialog(const char *filter = "All\0 *.*\0Text\0 *.TXT\0")
     {
+
         OPENFILENAMEA ofn;
         char szFile[260];
         HWND hwnd = nullptr;
@@ -72,6 +74,47 @@ public:
         };
 
         return std::nullopt;
+    }
+
+    static std::string wstrtostr(const std::wstring &wstr)
+    {
+        std::string strTo;
+        char *szTo = new char[wstr.length() + 1];
+        szTo[wstr.size()] = '\0';
+        WideCharToMultiByte(CP_ACP, 0, wstr.c_str(), -1, szTo, (int)wstr.length(), NULL, NULL);
+        strTo = szTo;
+        delete[] szTo;
+        return strTo;
+    }
+    static std::string PickFolder()
+    {
+        IFileDialog *pfd;
+        PWSTR pszFilePath;
+        if (SUCCEEDED(CoCreateInstance(CLSID_FileOpenDialog, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pfd))))
+        {
+            DWORD dwOptions;
+            if (SUCCEEDED(pfd->GetOptions(&dwOptions)))
+            {
+                pfd->SetOptions(dwOptions | FOS_PICKFOLDERS);
+            }
+            if (SUCCEEDED(pfd->Show(NULL)))
+            {
+                IShellItem *psi;
+                if (SUCCEEDED(pfd->GetResult(&psi)))
+                {
+
+                    if (SUCCEEDED(psi->GetDisplayName(SIGDN_DESKTOPABSOLUTEPARSING, &pszFilePath)))
+                    {
+
+                        return wstrtostr(pszFilePath);
+                    }
+                    psi->Release();
+                }
+            }
+            pfd->Release();
+        }
+
+        return std::string("");
     }
 
     static size_t getMemoryUsage()

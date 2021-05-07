@@ -6,6 +6,7 @@
 #include <assert.h>
 #include <string>
 #include <vector>
+#include <unordered_map>
 #include <array>
 #include <memory>
 #include <chrono>
@@ -13,13 +14,19 @@
 
 // windows stuff
 #include <windows.h>
-#undef near
-#undef far
+// #undef near
+// #undef far
 #include <commdlg.h>
 #include "psapi.h"
+#include <Shlobj.h>
+#include <shobjidl.h>
+#pragma comment(lib, "Shell32.lib")
 
 #include <glad/glad.h>
-#include <glfw/glfw3.h>
+
+#define GLFW_EXPOSE_NATIVE_WIN32
+#include <GLFW/glfw3.h>
+#include <GLFW/glfw3native.h>
 
 #define IMGUI_IMPL_OPENGL_LOADER_GLAD
 #include "imgui.h"

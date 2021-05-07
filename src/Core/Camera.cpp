@@ -18,9 +18,9 @@ Camera::Camera(float fov_angle, float ratio)
 	setProjection(m_fov_angle, m_screen_ratio, m_near, m_far);
 }
 
-void Camera::setProjection(float angle, float screen_ratio, float near = 0.01f, float far = 100.0f)
+void Camera::setProjection(float angle, float screen_ratio, float _near = 0.01f, float _far = 100.0f)
 {
-	projection = glm::mat4(1.0f) * glm::perspective(angle, screen_ratio, near, far);
+	projection = glm::mat4(1.0f) * glm::perspective(angle, screen_ratio, _near, _far);
 }
 
 void Camera::setFovAngle(float angle)

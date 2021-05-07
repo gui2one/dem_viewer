@@ -1,1 +1,2 @@
-cmake -B ./build -S .
+@REM cmake -B ./build -S .
+cmake -G "Visual Studio 16 2019" -A x64 -B ./build -S .

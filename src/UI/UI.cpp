@@ -108,7 +108,8 @@ void UI::render(Timer &timer)
     ImGuiBeginFrame();
 
     drawMainMenu();
-
+    if (m_displayAppOptions)
+        drawAppOtions();
     drawTileList();
 
     displayDemTile();
@@ -167,6 +168,24 @@ void UI::drawMainMenu()
                     loadFromFile(path.value());
                 }
             }
+
+            if (ImGui::MenuItem("Pick Folder"))
+            {
+                std::string path = PlatformUtils::PickFolder();
+
+                if (!path.empty())
+                {
+                    std::cout << "Path  : " << path << std::endl;
+                }
+            }
+            ImGui::EndMenu();
+        }
+        if (ImGui::BeginMenu("Misc"))
+        {
+            if (ImGui::MenuItem("Options", NULL, &m_displayAppOptions))
+            {
+            }
+
             ImGui::EndMenu();
         }
         ImGui::EndMainMenuBar();
@@ -291,4 +310,23 @@ void UI::displayDemTile3D(float delta_time)
 
     ImGui::End();
     ImGui::PopStyleVar(1);
+}
+
+void UI::drawAppOtions()
+{
+
+    if (ImGui::Begin("App Options", &m_displayAppOptions))
+    {
+
+        ImGui::Text("HGT Files Directory : ");
+        if (!m_options.heightFilesDBPath.empty())
+            ImGui::Text(m_options.heightFilesDBPath.c_str());
+        else
+            ImGui::Text("Not Set");
+
+        if (ImGui::Button("Set"))
+        {
+            m_options.heightFilesDBPath = PlatformUtils::PickFolder();
+        }
+    }
 }

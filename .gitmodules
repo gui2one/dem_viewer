@@ -16,3 +16,6 @@
 [submodule "vendor/pugixml"]
 	path = vendor/pugixml
 	url = https://github.com/zeux/pugixml.git
+[submodule "vendor/SimpleJSON"]
+	path = vendor/SimpleJSON
+	url = https://github.com/nbsdx/SimpleJSON.git

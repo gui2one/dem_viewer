@@ -18,7 +18,7 @@ std::vector<unsigned char> DemTile::toPixels()
     pixels.reserve(numSamples * 4);
 
     float height_span = m_maxHeight - m_minHeight;
-    std::cout << "height span --> " << height_span << std::endl;
+    // std::cout << "height span --> " << height_span << std::endl;
     float ratio = height_span / SHRT_MAX;
     for (size_t i = 0; i < SRTM_SIZE * SRTM_SIZE; i++)
     {

@@ -114,7 +114,7 @@ void UI::render(Timer &timer)
     // 'listen' to selection change
     if (s_old_selected_tile != s_selected_tile && s_selected_tile != -1)
     {
-        std::cout << "[Selection Change]" << std::endl;
+        // std::cout << "[Selection Change]" << std::endl;
         s_old_selected_tile = s_selected_tile;
 
         auto cur_tile = m_demTiles[s_selected_tile];
@@ -264,7 +264,7 @@ void UI::drawTileList()
             if (ImGui::Selectable(tile->m_file_name.c_str(), inc == s_selected_tile ? true : false))
             {
                 s_selected_tile = inc;
-                std::cout << s_selected_tile << "\n";
+                // std::cout << s_selected_tile << "\n";
             }
 
             inc++;

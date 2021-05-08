@@ -130,7 +130,7 @@ void Window::refresh(Timer &timer)
 bool Window::onMouseScrollEvent(Event &e)
 {
     MouseScrollEvent &event = static_cast<MouseScrollEvent &>(e);
-    // std::cout << event.m_yoffset << "\n";
+
     return true;
 }
 

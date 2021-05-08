@@ -2,12 +2,12 @@
 #include "MeshUtils.h"
 Dem3dObject::Dem3dObject()
 {
-    std::cout << "3d Object\n";
+    // std::cout << "3d Object\n";
 
     m_mesh = MeshUtils::makeGrid(1.f, 1.f, 1201, 1201);
     MeshUtils::rotateX(m_mesh, -PI / 2.0f);
 
-    std::cout << " num vertices " << m_mesh.vertices.size() << std::endl;
+    // std::cout << " num vertices " << m_mesh.vertices.size() << std::endl;
 }
 void Dem3dObject::init()
 {

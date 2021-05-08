@@ -8,6 +8,7 @@
 #include "Python/PythonHelper.h"
 
 #include "poly2tri.h"
+#include "ft2build.h"
 Application *app = Application::getInstance();
 using json::JSON;
 int main(int argc, char **argv)
@@ -32,7 +33,7 @@ int main(int argc, char **argv)
         std::cout << "\t X : " << cur_tri->GetPoint(0)->x << " -- Y : " << cur_tri->GetPoint(0)->y << std::endl;
         std::cout << "\t X : " << cur_tri->GetPoint(1)->x << " -- Y : " << cur_tri->GetPoint(1)->y << std::endl;
         std::cout << "\t X : " << cur_tri->GetPoint(2)->x << " -- Y : " << cur_tri->GetPoint(2)->y << std::endl;
-        }
+    }
     std::vector<std::string> paths = Utils::getHGTFilesList();
 
     std::cout << " num files : " << paths.size() << std::endl;

@@ -62,6 +62,10 @@ add_library(
 
 target_link_libraries(${CMAKE_PROJECT_NAME} poly2tri ${POLY2TRI_LIBRARIES})
 
+# FreeType
+add_subdirectory(vendor/freetype)
+target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC vendor/freetype/include)
+target_link_libraries(${CMAKE_PROJECT_NAME} freetype ${FREETYPE_LIBRARIES})
 # Simple JSON
 target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC vendor/SimpleJSON)
 

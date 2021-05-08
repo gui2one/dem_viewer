@@ -290,7 +290,7 @@ void UI::displayDemTile()
 
             // auto cur_tile = m_demTiles[s_selected_tile];
             // m_texture->setData(1201, 1201, cur_tile->toPixels().data());
-            ImGui::Image((void *)(intptr_t)m_texture->getID(), ImVec2(1201, 1201), ImVec2(0, 1), ImVec2(1, 0));
+            ImGui::Image((void *)(intptr_t)m_texture->getID(), ImVec2(1201, 1201), ImVec2(0, 0), ImVec2(1, 1));
         }
     }
     ImGui::End();

@@ -5,7 +5,7 @@ Dem3dObject::Dem3dObject()
     // std::cout << "3d Object\n";
 
     m_mesh = MeshUtils::makeGrid(1.f, 1.f, 1201, 1201);
-    MeshUtils::rotateX(m_mesh, -PI / 2.0f);
+    MeshUtils::rotateX(m_mesh, PI / 2.0f);
 
     // std::cout << " num vertices " << m_mesh.vertices.size() << std::endl;
 }
@@ -37,7 +37,7 @@ void Dem3dObject::buildVAO(std::vector<short> heights)
         vertex.position.y = (float)heights[i] / (float)SHRT_MAX;
     }
 
-    MeshUtils::computeNormals(m_mesh);
+    MeshUtils::computeNormals(m_mesh, true);
 
     m_vertexBuffer.reset(new OpenGLVertexBuffer((float *)m_mesh.vertices.data(), m_mesh.vertices.size() * sizeof(Vertex)));
 

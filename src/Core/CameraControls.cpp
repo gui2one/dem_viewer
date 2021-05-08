@@ -3,7 +3,7 @@
 CameraControls::CameraControls()
     : m_window(nullptr),
       m_camera(nullptr),
-      m_uvPos(glm::vec2(PI * 0.9f, PI / 2.6f)),
+      m_uvPos(glm::vec2(PI / 2.0f, PI * 0.22f)),
       m_radius(1.2f),
       m_cursorDelta(glm::vec2(0.f)),
       m_cursorOldPos(glm::vec2(0.f))
@@ -13,7 +13,7 @@ CameraControls::CameraControls()
 CameraControls::CameraControls(GLFWwindow *window, Ref<Camera> &camera)
     : m_window(window),
       m_camera(camera),
-      m_uvPos(glm::vec2(PI * 0.9f, PI / 2.6f)),
+      m_uvPos(glm::vec2(PI / 2.0f, PI / 2.6f)),
       m_radius(1.2f),
       m_cursorDelta(glm::vec2(0.f)),
       m_cursorOldPos(glm::vec2(0.f))

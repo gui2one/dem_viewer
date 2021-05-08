@@ -47,6 +47,21 @@ include_directories(
 target_link_directories(${CMAKE_PROJECT_NAME} PUBLIC libs/)
 target_link_libraries(${CMAKE_PROJECT_NAME} python3.lib)
 
+# poly2tri
+target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC vendor/poly2tri/poly2tri)
+
+add_library(
+	poly2tri STATIC
+
+	vendor/poly2tri/poly2tri/common/shapes.cc
+    vendor/poly2tri/poly2tri/sweep/cdt.cc
+    vendor/poly2tri/poly2tri/sweep/advancing_front.cc
+    vendor/poly2tri/poly2tri/sweep/sweep_context.cc
+    vendor/poly2tri/poly2tri/sweep/sweep.cc
+)
+
+target_link_libraries(${CMAKE_PROJECT_NAME} poly2tri ${POLY2TRI_LIBRARIES})
+
 # Simple JSON
 target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC vendor/SimpleJSON)
 

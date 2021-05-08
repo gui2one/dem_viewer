@@ -25,3 +25,6 @@
 [submodule "vendor/poly2tri"]
 	path = vendor/poly2tri
 	url = https://github.com/greenm01/poly2tri.git
+[submodule "vendor/freetype"]
+	path = vendor/freetype
+	url = https://gitlab.freedesktop.org/freetype/freetype.git

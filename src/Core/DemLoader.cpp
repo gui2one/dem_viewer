@@ -17,7 +17,6 @@ static void removeSRTMErrors(std::vector<short> &heights, int resolution = 1201)
             // LEFT
             if (x > 0)
             {
-
                 if (heights[i - 1] != SHRT_MIN)
                 {
                     total += heights[i - 1];
@@ -28,7 +27,6 @@ static void removeSRTMErrors(std::vector<short> &heights, int resolution = 1201)
             // TOP
             if (y > 0)
             {
-
                 if (heights[i - resolution] != SHRT_MIN)
                 {
                     total += heights[i - resolution];
@@ -39,7 +37,6 @@ static void removeSRTMErrors(std::vector<short> &heights, int resolution = 1201)
             // RIGHT
             if (x < resolution - 1)
             {
-
                 if (heights[i + 1] != SHRT_MIN)
                 {
                     total += heights[i + 1];
@@ -88,16 +85,9 @@ std::vector<short> DemLoader::Load(std::string file_path)
 
         heights.push_back(val);
     }
-    removeSRTMErrors(heights);
-    return heights;
 
-    // //Read single value from file at row,col
-    // const int row = 0;
-    // const int col = 0;
-    // size_t offset = sizeof(buffer) * ((row * SRTM_SIZE) + col);
-    // file.seekg(offset, std::ios::beg);
-    // file.read(reinterpret_cast<char *>(buffer), sizeof(buffer));
-    // short single_value = (buffer[0] << 8) | buffer[1];
-    // std::cout << "values at " << row << "," << col << ":" << std::endl;
-    // std::cout << "  heights array: " << heights[row][col] << ", file: " << single_value << std::endl;
+    // smooth sampling errors
+    removeSRTMErrors(heights);
+
+    return heights;
 }

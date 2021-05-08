@@ -16,7 +16,7 @@
 
 #include "Core/PlatformUtils.h"
 #include "TileMapViewer/TileMapViewer.h"
-
+#include "Core/Dem3dObject.h"
 struct AppOptions
 {
     std::string heightFilesDBPath;
@@ -29,11 +29,13 @@ class UI
 public:
     CameraControls m_controls;
     TileMapViewer m_tileMapViewer;
-
+    Ref<Dem3dObject> m_3dObject;
     AppOptions m_options;
     bool m_displayAppOptions = true;
 
 public:
+    UI();
+    ~UI() = default;
     void ImGuiInit(GLFWwindow *window);
 
     void ImGuiBeginFrame();
@@ -59,7 +61,9 @@ private:
 
     Ref<OpenGLFrameBuffer> m_frameBuffer;
     std::vector<Ref<DemTile>> m_demTiles;
-    int s_selected_tile = -1;
+
+    inline static int s_selected_tile = -1;
+    inline static int s_old_selected_tile = -1;
 
     Ref<OpenGLShader> m_shader;
     Ref<Camera> m_camera;

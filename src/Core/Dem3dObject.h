@@ -10,6 +10,7 @@
 class Dem3dObject : public Entity3d
 {
 public:
+    Mesh m_mesh;
     Ref<OpenGLVertexBuffer> m_vertexBuffer;
     Ref<OpenGLIndexBuffer> m_indexBuffer;
     Ref<OpenGLVertexArray> m_vertexArray;

@@ -22,6 +22,11 @@ static std::string getFileNameFromPath(std::string path)
     return std::string(m[0]);
 }
 
+UI::UI()
+{
+    m_3dObject = MakeRef<Dem3dObject>();
+}
+
 void UI::ImGuiInit(GLFWwindow *window)
 {
     // init ImGui
@@ -103,6 +108,13 @@ void UI::ImGuiEndFrame()
 
 void UI::render(Timer &timer)
 {
+    // 'listen' to selection change
+    if (s_old_selected_tile != s_selected_tile && s_selected_tile != -1)
+    {
+        std::cout << "[Selection Change]" << std::endl;
+        m_3dObject->buildVAO(m_demTiles[s_selected_tile]->m_heights);
+        s_old_selected_tile = s_selected_tile;
+    }
 
     m_controls.update(timer.getDeltaTime());
     ImGuiBeginFrame();
@@ -148,7 +160,7 @@ void UI::render3DView()
 
     // m_shader->useProgram();
 
-    tile->m_object->draw();
+    m_3dObject->draw();
     glUseProgram(0);
     m_frameBuffer->unbind();
 }

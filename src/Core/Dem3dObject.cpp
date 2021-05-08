@@ -3,46 +3,26 @@
 Dem3dObject::Dem3dObject()
 {
     std::cout << "3d Object\n";
+
+    m_mesh = MeshUtils::makeGrid(1.f, 1.f, 1201, 1201);
+    MeshUtils::rotateX(m_mesh, -PI / 2.0f);
+
+    std::cout << " num vertices " << m_mesh.vertices.size() << std::endl;
 }
 
 void Dem3dObject::buildVAO(std::vector<short> heights)
 {
-    Mesh mesh;
-    mesh = MeshUtils::makeGrid(1.f, 1.f, 1201, 1201);
-    MeshUtils::rotateX(mesh, -PI / 2.0f);
 
-    std::cout << " num vertices " << mesh.vertices.size() << std::endl;
-
-    for (size_t i = 0; i < mesh.vertices.size(); i++)
+    for (size_t i = 0; i < m_mesh.vertices.size(); i++)
     {
-        Vertex &vertex = mesh.vertices[i];
+        Vertex &vertex = m_mesh.vertices[i];
         vertex.position.y = (float)heights[i] / (float)SHRT_MAX;
-        // if (heights[i] == SHRT_MIN)
-        // {
-        //     std::cout << "[Found Error]" << std::endl;
-        //     if (i > 0)
-        //     {
-
-        //         vertex.position.y = (float)heights[i - 1] / (float)SHRT_MAX;
-        //     }
-        //     else
-        //     {
-        //         vertex.position.y = 1.0f;
-        //     }
-        // }
-        // else
-        // {
-
-        //     vertex.position.y = (float)heights[i] / (float)SHRT_MAX;
-        // }
     }
 
-    // cols test
+    MeshUtils::computeNormals(m_mesh);
 
-    MeshUtils::computeNormals(mesh);
-
-    std::cout << glm::to_string(mesh.vertices[0].normal) << "\n";
-    m_vertexBuffer.reset(new OpenGLVertexBuffer((float *)mesh.vertices.data(), mesh.vertices.size() * sizeof(Vertex)));
+    // std::cout << glm::to_string(m_mesh.vertices[0].normal) << "\n";
+    m_vertexBuffer.reset(new OpenGLVertexBuffer((float *)m_mesh.vertices.data(), m_mesh.vertices.size() * sizeof(Vertex)));
     // m_vertexBuffer->bind();
 
     BufferLayout layout = {
@@ -52,14 +32,14 @@ void Dem3dObject::buildVAO(std::vector<short> heights)
 
     m_vertexBuffer->setLayout(layout);
 
-    m_vertexArray = MakeRef<OpenGLVertexArray>();
+    m_vertexArray.reset(new OpenGLVertexArray());
     m_vertexArray->addVertexBuffer(m_vertexBuffer);
 
-    m_indexBuffer.reset(new OpenGLIndexBuffer(mesh.indices.data(), mesh.indices.size() * sizeof(int)));
+    m_indexBuffer.reset(new OpenGLIndexBuffer(m_mesh.indices.data(), m_mesh.indices.size() * sizeof(int)));
     m_vertexArray->setIndexBuffer(m_indexBuffer);
     // m_indexBuffer->bind();
 
-    m_numElements = (int)mesh.indices.size();
+    m_numElements = (int)m_mesh.indices.size();
 }
 
 void Dem3dObject::draw()

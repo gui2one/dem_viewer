@@ -17,8 +17,6 @@ public:
 
     std::string m_file_name;
 
-    Ref<Dem3dObject> m_object;
-
     short m_minHeight;
     short m_maxHeight;
 

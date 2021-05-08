@@ -22,3 +22,6 @@
 [submodule "vendor/libtiff"]
 	path = vendor/libtiff
 	url = https://gitlab.com/libtiff/libtiff.git
+[submodule "vendor/poly2tri"]
+	path = vendor/poly2tri
+	url = https://github.com/greenm01/poly2tri.git

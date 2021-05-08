@@ -9,22 +9,9 @@ Dem3dObject::Dem3dObject()
 
     std::cout << " num vertices " << m_mesh.vertices.size() << std::endl;
 }
-
-void Dem3dObject::buildVAO(std::vector<short> heights)
+void Dem3dObject::init()
 {
-
-    for (size_t i = 0; i < m_mesh.vertices.size(); i++)
-    {
-        Vertex &vertex = m_mesh.vertices[i];
-        vertex.position.y = (float)heights[i] / (float)SHRT_MAX;
-    }
-
-    MeshUtils::computeNormals(m_mesh);
-
-    // std::cout << glm::to_string(m_mesh.vertices[0].normal) << "\n";
     m_vertexBuffer.reset(new OpenGLVertexBuffer((float *)m_mesh.vertices.data(), m_mesh.vertices.size() * sizeof(Vertex)));
-    // m_vertexBuffer->bind();
-
     BufferLayout layout = {
         {ShaderDataType::Float3, "position"},
         {ShaderDataType::Float3, "normal"},
@@ -37,9 +24,37 @@ void Dem3dObject::buildVAO(std::vector<short> heights)
 
     m_indexBuffer.reset(new OpenGLIndexBuffer(m_mesh.indices.data(), m_mesh.indices.size() * sizeof(int)));
     m_vertexArray->setIndexBuffer(m_indexBuffer);
-    // m_indexBuffer->bind();
 
     m_numElements = (int)m_mesh.indices.size();
+}
+
+void Dem3dObject::buildVAO(std::vector<short> heights)
+{
+
+    for (size_t i = 0; i < m_mesh.vertices.size(); i++)
+    {
+        Vertex &vertex = m_mesh.vertices[i];
+        vertex.position.y = (float)heights[i] / (float)SHRT_MAX;
+    }
+
+    MeshUtils::computeNormals(m_mesh);
+
+    m_vertexBuffer.reset(new OpenGLVertexBuffer((float *)m_mesh.vertices.data(), m_mesh.vertices.size() * sizeof(Vertex)));
+
+    BufferLayout layout = {
+        {ShaderDataType::Float3, "position"},
+        {ShaderDataType::Float3, "normal"},
+        {ShaderDataType::Float2, "t_coords"}};
+
+    m_vertexBuffer->setLayout(layout);
+
+    // m_vertexArray.reset(new OpenGLVertexArray());
+    m_vertexArray->addVertexBuffer(m_vertexBuffer);
+
+    // m_indexBuffer.reset(new OpenGLIndexBuffer(m_mesh.indices.data(), m_mesh.indices.size() * sizeof(int)));
+    // m_vertexArray->setIndexBuffer(m_indexBuffer);
+
+    // m_numElements = (int)m_mesh.indices.size();
 }
 
 void Dem3dObject::draw()

@@ -54,6 +54,8 @@ void UI::ImGuiInit(GLFWwindow *window)
     const char *glsl_version = "#version 400";
     ImGui_ImplOpenGL3_Init(glsl_version);
 
+    m_3dObject->init();
+
     ////////////
     // end imgui config
     ///////////

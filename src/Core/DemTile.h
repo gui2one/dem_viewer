@@ -13,7 +13,7 @@ class DemTile
 public:
     const int SRTM_SIZE = 1201;
     std::vector<short> m_heights;
-    Ref<OpenGLTexture> m_texture;
+    // Ref<OpenGLTexture> m_texture;
 
     std::string m_file_name;
 

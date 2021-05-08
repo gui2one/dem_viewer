@@ -25,6 +25,7 @@ static std::string getFileNameFromPath(std::string path)
 UI::UI()
 {
     m_3dObject = MakeRef<Dem3dObject>();
+    m_texture = MakeRef<OpenGLTexture>();
 }
 
 void UI::ImGuiInit(GLFWwindow *window)
@@ -112,8 +113,11 @@ void UI::render(Timer &timer)
     if (s_old_selected_tile != s_selected_tile && s_selected_tile != -1)
     {
         std::cout << "[Selection Change]" << std::endl;
-        m_3dObject->buildVAO(m_demTiles[s_selected_tile]->m_heights);
         s_old_selected_tile = s_selected_tile;
+
+        auto cur_tile = m_demTiles[s_selected_tile];
+        m_3dObject->buildVAO(cur_tile->m_heights);
+        m_texture->setData(1201, 1201, cur_tile->toPixels().data());
     }
 
     m_controls.update(timer.getDeltaTime());
@@ -282,8 +286,9 @@ void UI::displayDemTile()
         if (s_selected_tile != -1)
         {
 
-            auto cur_tile = m_demTiles[s_selected_tile];
-            ImGui::Image((void *)(intptr_t)cur_tile->m_texture->getID(), ImVec2(1201, 1201), ImVec2(0, 1), ImVec2(1, 0));
+            // auto cur_tile = m_demTiles[s_selected_tile];
+            // m_texture->setData(1201, 1201, cur_tile->toPixels().data());
+            ImGui::Image((void *)(intptr_t)m_texture->getID(), ImVec2(1201, 1201), ImVec2(0, 1), ImVec2(1, 0));
         }
     }
     ImGui::End();

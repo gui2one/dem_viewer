@@ -10,6 +10,7 @@
 
 #include "Render/OpenGLFrameBuffer.h"
 #include "Render/OpenGLShader.h"
+#include "Render/OpenGLTexture.h"
 
 #include "Core/Camera.h"
 #include "Core/CameraControls.h"
@@ -30,6 +31,7 @@ public:
     CameraControls m_controls;
     TileMapViewer m_tileMapViewer;
     Ref<Dem3dObject> m_3dObject;
+    Ref<OpenGLTexture> m_texture;
     AppOptions m_options;
     bool m_displayAppOptions = true;
 

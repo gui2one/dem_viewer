@@ -6,9 +6,9 @@ DemTile::DemTile(std::vector<short> heights)
 
     m_minHeight = *std::min_element(m_heights.begin(), m_heights.end());
     m_maxHeight = *std::max_element(m_heights.begin(), m_heights.end());
-    m_texture = MakeRef<OpenGLTexture>();
-    std::vector<unsigned char> pixels = toPixels();
-    m_texture->setData(SRTM_SIZE, SRTM_SIZE, pixels.data());
+    // m_texture = MakeRef<OpenGLTexture>();
+    // std::vector<unsigned char> pixels = toPixels();
+    // m_texture->setData(SRTM_SIZE, SRTM_SIZE, pixels.data());
 };
 
 std::vector<unsigned char> DemTile::toPixels()

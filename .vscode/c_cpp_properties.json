@@ -5,7 +5,8 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "${vcpkgRoot}/x64-windows/include",
-                "C:/VulkanSDK/1.2.170.0/Include"
+                "C:/VulkanSDK/1.2.170.0/Include",
+                "C:/python38/include"
             ],
             "defines": [
                 "_DEBUG",

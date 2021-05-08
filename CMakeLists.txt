@@ -40,8 +40,21 @@ target_include_directories(${CMAKE_PROJECT_NAME}
 
 )
 
+#Python
+include_directories(
+    C:/Python38/include/
+)
+target_link_directories(${CMAKE_PROJECT_NAME} PUBLIC libs/)
+target_link_libraries(${CMAKE_PROJECT_NAME} python3.lib)
+
 # Simple JSON
 target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC vendor/SimpleJSON)
+
+# # LIBTIFF
+# add_subdirectory(vendor/libtiff)
+
+# target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC vendor/libtiff/libtiff)
+# target_link_libraries(${CMAKE_PROJECT_NAME} tiff ${TIFF_LIBRARIES})
 
 # GLAD
 add_subdirectory(vendor/glad)
@@ -60,12 +73,12 @@ include_directories(vendor/glfw/include)
 target_link_libraries(${CMAKE_PROJECT_NAME} glfw ${GLFW_LIBRARIES})
 
 
-# CURL
-option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
-add_subdirectory(vendor/curl)
+# # CURL
+# option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
+# add_subdirectory(vendor/curl)
 
-include_directories(vendor/curl/include)
-target_link_libraries(${CMAKE_PROJECT_NAME} libcurl ${LIBCURL_LIBRARIES})
+# include_directories(vendor/curl/include)
+# target_link_libraries(${CMAKE_PROJECT_NAME} libcurl ${LIBCURL_LIBRARIES})
 
 
 

@@ -3,7 +3,8 @@
 #include <stdio.h>
 #include <pch.h>
 #include <core.h>
-
+#include <json.hpp>
+#include "Python/PythonHelper.h"
 namespace Utils
 {
     static void refreshFileList()
@@ -19,6 +20,27 @@ namespace Utils
 
         _pclose(in);
         std::cout << "[debug] Done refreshing list\n";
+    }
+
+    std::vector<std::string> getHGTFilesList()
+    {
+        using json::JSON;
+        std::string script_output;
+        PythonHelper::runScrcript(RESOURCES_DIR "/python/list_hgt_files.py", script_output);
+
+        JSON json = JSON::Load(script_output);
+
+        // std::cout << json << std::endl;
+
+        std::vector<std::string> paths;
+        paths.reserve(json.length());
+
+        for (size_t i = 0; i < json.length(); i++)
+        {
+            paths.emplace_back(json[i].ToString());
+        }
+
+        return paths;
     }
 
     static std::vector<std::string> getFilesList()

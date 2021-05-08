@@ -1,7 +1,13 @@
 
-from PIL import Image
+
 import os
-# print(dir(Image))
+import sys
+root_dir = os.path.dirname(os.path.abspath(__file__)) 
+sys.path.append(os.path.join(root_dir, "modules"))
+from PIL import Image
+
+print(Image.Image)
+sys.exit(0)
 
 
 def make_tiles(image, size, level=0,  limit=30):

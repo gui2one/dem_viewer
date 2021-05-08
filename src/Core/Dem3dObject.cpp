@@ -16,8 +16,25 @@ void Dem3dObject::buildVAO(std::vector<short> heights)
     for (size_t i = 0; i < mesh.vertices.size(); i++)
     {
         Vertex &vertex = mesh.vertices[i];
-
         vertex.position.y = (float)heights[i] / (float)SHRT_MAX;
+        // if (heights[i] == SHRT_MIN)
+        // {
+        //     std::cout << "[Found Error]" << std::endl;
+        //     if (i > 0)
+        //     {
+
+        //         vertex.position.y = (float)heights[i - 1] / (float)SHRT_MAX;
+        //     }
+        //     else
+        //     {
+        //         vertex.position.y = 1.0f;
+        //     }
+        // }
+        // else
+        // {
+
+        //     vertex.position.y = (float)heights[i] / (float)SHRT_MAX;
+        // }
     }
 
     // cols test

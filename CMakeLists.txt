@@ -12,11 +12,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS "/MP /arch:AVX2 /EHsc")
 # add_definitions(-DDEBUG)
 
-file(GLOB_RECURSE src_files "src/*.rc" "src/*.cpp" "src/*.c" "src/*.h")
+file(GLOB_RECURSE src_files "src/*.rc" "src/*.cpp" "src/*.c" "src/*.h" "src/*.hpp")
 
 add_executable( ${CMAKE_PROJECT_NAME} #SHARED
 
     ${src_files}
+    # vendor/SimpleJSON/json.hpp
 )
 
 add_custom_command(

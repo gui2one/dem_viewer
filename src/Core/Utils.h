@@ -1,12 +1,20 @@
 #ifndef UTILS_H
 #define UTILS_H
-#include <stdio.h>
 #include <pch.h>
 #include <core.h>
+
+#include <stdio.h>
 #include <json.hpp>
+
 #include "Python/PythonHelper.h"
 namespace Utils
 {
+    using json::JSON;
+
+    struct Point
+    {
+        double x, y;
+    };
     static void refreshFileList()
     {
         std::cout << "[debug] refreshing list\n";
@@ -24,7 +32,7 @@ namespace Utils
 
     std::vector<std::string> getHGTFilesList()
     {
-        using json::JSON;
+
         std::string script_output;
         PythonHelper::runScrcript(RESOURCES_DIR "/python/list_hgt_files.py", script_output);
 
@@ -73,6 +81,65 @@ namespace Utils
     {
         const float one_degree_at_equator = 111.319f;
         return one_degree_at_equator * cosf(radians(abs(latitude)));
+    }
+
+    static double lerp(double val1, double val2, double t)
+    {
+
+        return (val2 - val1) * t - val1;
+    }
+
+    static std::vector<Point> conicCurve(Point pt1, Point pt2, Point ctrl, int num_iter)
+    {
+        std::vector<Point> points;
+
+        for (size_t i = 0; i < num_iter; i++)
+        {
+            double t = (double)i / (num_iter - 1);
+
+            double x1 = lerp(pt1.x, ctrl.x, t);
+            double y1 = lerp(pt1.y, ctrl.y, t);
+            double x2 = lerp(ctrl.x, pt2.x, t);
+            double y2 = lerp(ctrl.y, pt2.y, t);
+
+            double x3 = lerp(x1, x2, t);
+            double y3 = lerp(y1, y2, t);
+
+            Point p = {x3, y3};
+            points.push_back(p);
+        }
+
+        return points;
+    }
+
+    static std::vector<Point> cubicCurve(Point pt1, Point pt2, Point ctrl1, Point ctrl2, int num_iter)
+    {
+        std::vector<Point> points;
+        for (size_t i = 0; i < num_iter; i++)
+        {
+            double t = (double)i / (num_iter - 1);
+
+            double x1 = lerp(pt1.x, ctrl1.x, t);
+            double y1 = lerp(pt1.y, ctrl1.y, t);
+            double x2 = lerp(ctrl1.x, ctrl2.x, t);
+            double y2 = lerp(ctrl1.y, ctrl2.y, t);
+            double x3 = lerp(ctrl2.x, pt2.x, t);
+            double y3 = lerp(ctrl2.x, pt2.y, t);
+
+            double x11 = lerp(x1, x2, t);
+            double y11 = lerp(y1, y2, t);
+
+            double x22 = lerp(x2, x3, t);
+            double y22 = lerp(y2, y3, t);
+
+            double finalx = lerp(x11, x22, t);
+            double finaly = lerp(y11, y22, t);
+
+            Point p = {finalx, finaly};
+
+            points.push_back(p);
+        }
+        return points;
     }
 }
 

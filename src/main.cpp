@@ -1,19 +1,31 @@
-// #include <pch.h>
+#include <pch.h>
 #include "Core/Application.h"
 #include <stdio.h>
-#include <json.hpp>
+// #include <json.hpp>
 // #include <curl/curl.h>
 #include "Core/Utils.h"
 #include "Core/PlatformUtils.h"
 #include "Python/PythonHelper.h"
 
-#include "poly2tri.h"
-#include "ft2build.h"
+// #include "poly2tri.h"
+// #include "ft2build.h"
+// #include FT_FREETYPE_H
+// #include FT_OUTLINE_H
+// #include FT_BBOX_H
+
+#include "Font/FontOutliner.h"
+#include "vendor/delaunator.hpp"
 Application *app = Application::getInstance();
-using json::JSON;
+// using json::JSON;
+
 int main(int argc, char **argv)
 {
 
+    FontOutliner outliner(RESOURCES_DIR "/fonts/arial.ttf");
+    outliner.extractOutline("B");
+    /* 
+    poly2tri example 
+    */
     // std::vector<p2t::Point *> points;
     // p2t::Point *pt = new p2t::Point(0.0, 0.0);
     // points.push_back(pt);

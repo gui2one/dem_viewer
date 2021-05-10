@@ -34,6 +34,45 @@ bool FontOutliner::extractOutline(const char *symbol)
     FT_GlyphSlot slot = face->glyph;
     FT_Outline &outline = slot->outline;
 
+    std::cout << "n_contours : " << outline.n_contours << std::endl;
+    std::cout << "n_points : " << outline.n_points << std::endl;
+
+    for (size_t i = 0; i < outline.n_points; i++)
+    {
+        const char c = outline.flags;
+        // char c = 0b00000011;
+
+        if (c & FT_OUTLINE_NONE)
+        {
+
+            std::cout << "Bit 0 on" << std::endl;
+        }
+        if (c & FT_OUTLINE_OWNER)
+        {
+            std::cout << "Bit 1 on" << std::endl;
+        }
+        if (c & FT_OUTLINE_EVEN_ODD_FILL)
+        {
+            std::cout << "FT_OUTLINE_EVEN_ODD_FILL" << std::endl;
+        }
+        if (c & FT_OUTLINE_REVERSE_FILL)
+        {
+            std::cout << "FT_OUTLINE_REVERSE_FILL" << std::endl;
+        }
+        if (c & FT_OUTLINE_IGNORE_DROPOUTS)
+        {
+            std::cout << "FT_OUTLINE_IGNORE_DROPOUTS" << std::endl;
+        }
+        if (c & FT_OUTLINE_HIGH_PRECISION)
+        {
+            std::cout << "FT_OUTLINE_HIGH_PRECISION" << std::endl;
+        }
+        if (c & FT_OUTLINE_SINGLE_PASS)
+        {
+            std::cout << "FT_OUTLINE_SINGLE_PASS" << std::endl;
+        }
+    }
+
     FT_BBox bbox;
     error = FT_Outline_Get_BBox(&outline, &bbox);
 

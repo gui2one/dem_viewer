@@ -28,3 +28,6 @@
 [submodule "vendor/freetype"]
 	path = vendor/freetype
 	url = https://gitlab.freedesktop.org/freetype/freetype.git
+[submodule "vendor/Font23D"]
+	path = vendor/Font23D
+	url = https://github.com/codetiger/Font23D.git

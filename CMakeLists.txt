@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.2)
 
-
+set(CMAKE_TOOLCHAIN_FILE ${CMAKE_CURRENT_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake
+  CACHE STRING "Vcpkg toolchain file")
 
 project(dem_viewer)
 
@@ -17,7 +18,8 @@ file(GLOB_RECURSE src_files "src/*.rc" "src/*.cpp" "src/*.c" "src/*.h" "src/*.hp
 add_executable( ${CMAKE_PROJECT_NAME} #SHARED
 
     ${src_files}
-    # vendor/SimpleJSON/json.hpp
+
+
 )
 
 add_custom_command(
@@ -64,17 +66,32 @@ add_library(
 target_link_libraries(${CMAKE_PROJECT_NAME} poly2tri ${POLY2TRI_LIBRARIES})
 
 # FreeType
+# set(SKIP_INSTALL_LIBRARIES 0)
+# set(SKIP_INSTALL_ALL 0)
 add_subdirectory(vendor/freetype)
 target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC vendor/freetype/include)
 target_link_libraries(${CMAKE_PROJECT_NAME} freetype ${FREETYPE_LIBRARIES})
+export(TARGETS freetype  FILE Freetype.cmake)
+
+# FTGL
+option(BUILD_SHARED_LIBS OFF)
+include_directories(
+    vendor/freetype/include
+)
+set(Freetype_DIR "../../build/vendor/freetype/CMakeFiles/Export/lib/cmake/freetype")
+set(CMAKE_PREFIX_PATH vendor/freetype/include)
+add_subdirectory(vendor/ftgl)
+target_include_directories(
+    ${CMAKE_PROJECT_NAME} PRIVATE 
+    vendor/ftgl/src
+    vendor/ftgl/
+)
+target_link_libraries(${CMAKE_PROJECT_NAME} ftgl ${FTGL_LIBRARIES})
+
 # Simple JSON
 target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC vendor/SimpleJSON)
 
-# # LIBTIFF
-# add_subdirectory(vendor/libtiff)
 
-# target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC vendor/libtiff/libtiff)
-# target_link_libraries(${CMAKE_PROJECT_NAME} tiff ${TIFF_LIBRARIES})
 
 # GLAD
 add_subdirectory(vendor/glad)

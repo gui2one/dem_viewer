@@ -6,50 +6,42 @@
 #include "Core/PlatformUtils.h"
 #include "Python/PythonHelper.h"
 
-#include "Font/FontOutliner.h"
-#include "vendor/delaunator.hpp"
+// #include "Font/FontOutliner.h"
+// #include "vendor/delaunator.hpp"
+#include <Font/FontLibrary.h>
 
 #include "poly2tri.h"
+
+// #include <FTGL/FTPoint.h>
+
+#include <FTGL/ftgl.h>
+
+#include <FTVectoriser.h>
+
+#include <json.hpp>
+using json::JSON;
 Application *app = Application::getInstance();
 
 int main(int argc, char **argv)
 {
 
-    FontOutliner outliner(RESOURCES_DIR "/fonts/arial.ttf");
-    outliner.extractOutline("A");
-    /* 
-    poly2tri example 
-    */
-    std::vector<p2t::Point *> points;
+    FontLibrary library;
+    FontFace face(library, RESOURCES_DIR "/fonts/arial.ttf");
 
-    points.push_back(new p2t::Point(0.0, 0.0));
-    points.push_back(new p2t::Point(1.0, 0.0));
-    points.push_back(new p2t::Point(1.0, 1.0));
-    points.push_back(new p2t::Point(0.0, 1.0));
+    FT_UInt index = FT_Get_Char_Index(face.m_face, 'A');
+    FT_Error error = FT_Load_Glyph(face.m_face, index, FT_LOAD_NO_SCALE | FT_LOAD_NO_BITMAP);
+    FT_GlyphSlot slot = face.m_face->glyph;
 
-    p2t::CDT cdt = p2t::CDT(points);
+    JSON data;
 
-    std::vector<p2t::Point *> hole;
-    hole.push_back(new p2t::Point(0.2, 0.2));
-    hole.push_back(new p2t::Point(0.2, 0.8));
-    hole.push_back(new p2t::Point(0.8, 0.8));
-    hole.push_back(new p2t::Point(0.8, 0.2));
+    FTGLPolygonFont font(RESOURCES_DIR "/fonts/arial.ttf");
 
-    cdt.AddHole(hole);
-    cdt.Triangulate();
-    std::vector<p2t::Triangle *> triangles = cdt.GetTriangles();
+    // std::cout << data << std::endl;
+    // std::cout << mesh->TesselationCount() << std::endl;
+    // std::cout << mesh->Tesselation(0)->Point(0).Xf() << std::endl;
 
-    for (size_t i = 0; i < triangles.size(); i++)
-    {
-        p2t::Triangle *cur_tri = triangles[i];
-        std::cout << "Triangle " << i << " :" << std::endl;
-        std::cout << "\t X : " << cur_tri->GetPoint(0)->x << " -- Y : " << cur_tri->GetPoint(0)->y << std::endl;
-        std::cout << "\t X : " << cur_tri->GetPoint(1)->x << " -- Y : " << cur_tri->GetPoint(1)->y << std::endl;
-        std::cout << "\t X : " << cur_tri->GetPoint(2)->x << " -- Y : " << cur_tri->GetPoint(2)->y << std::endl;
-    }
-
-    // std::vector<std::string> paths = Utils::getHGTFilesList();
-    // std::cout << " num files : " << paths.size() << std::endl;
+    // FontOutliner outliner(RESOURCES_DIR "/fonts/arial.ttf");
+    // outliner.extractOutline("A");
 
     app->run();
     return 0;

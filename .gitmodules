@@ -31,3 +31,9 @@
 [submodule "vendor/Font23D"]
 	path = vendor/Font23D
 	url = https://github.com/codetiger/Font23D.git
+[submodule "vendor/ftgl"]
+	path = vendor/ftgl
+	url = https://github.com/ulrichard/ftgl.git
+[submodule "vcpkg"]
+	path = vcpkg
+	url = https://github.com/microsoft/vcpkg
